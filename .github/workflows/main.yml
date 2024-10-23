@@ -11,5 +11,6 @@ jobs:
       - uses: sanity-io/github-action-sanity@v0.7-alpha
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_READ_TOKEN }}
+          SANITY_STUDIO_CONFIG_PATH: '/marius-tanker-sanity'
         with:
           args: deploy
