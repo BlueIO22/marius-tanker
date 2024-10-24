@@ -10,10 +10,11 @@ jobs:
       - uses: actions/checkout@v3
       - name: GitHub Action for npx
         uses: mikeal/npx@1.0.0
+      - name: Checkout dir
+        run: cd ./marius-tanker-sanity
       - uses: sanity-io/github-action-sanity@v0.7-alpha
         env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_READ_TOKEN }}
-          SANITY_STUDIO_CONFIG_PATH: ./marius-tanker-sanity
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_READ_TOKEN }} 
         with:
           args: deploy
 
