@@ -6,12 +6,10 @@ jobs:
   sanity-deploy:
     runs-on: ubuntu-latest
     name: Deploy Sanity
-    steps:
-      - uses: actions/checkout@v2
-      - uses: sanity-io/github-action-sanity@v0.7-alpha
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_READ_TOKEN }}
-          SANITY_STUDIO_CONFIG_PATH: './marius-tanker-sanity/'
-        with:
-          args: deploy 
+    steps: 
+      - name: GitHub Action for npx
+        uses: mikeal/npx@1.0.0
+      - name: Deploy Sanity
+        run: npx sanity deploy
+        working-directory: ./marius-tanker-sanity
 
