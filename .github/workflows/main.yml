@@ -17,5 +17,5 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_READ_TOKEN }} 
           SANITY_STUDIO_CONFIG_PATH: ./marius-tanker/marius-tanker-sanity
         with:
-          args: deploy
+          args: deploy --workdir=./marius-tanker/marius-tanker-sanity
 
