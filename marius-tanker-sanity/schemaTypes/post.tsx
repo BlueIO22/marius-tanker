@@ -1,6 +1,6 @@
-import {faNewspaper} from '@fortawesome/free-solid-svg-icons'
+import {faInfoCircle, faNewspaper} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'post',
@@ -41,17 +41,79 @@ export default defineType({
       validation: (v) => v.required(),
     }),
     defineField({
+      name: 'imageCreditLine',
+      type: 'string',
+      description:
+        'Bildekreditering er veldig viktig, hvis bildet er valgt fra unsplash så kommer dette automatisk',
+      title: 'Bildekredittering',
+    }),
+    defineField({
       name: 'content',
       title: 'Innhold',
       type: 'array',
       of: [
-        {
+        defineArrayMember({
           type: 'block',
           marks: {
             decorators: [
               {title: 'Strong', value: 'strong'},
               {title: 'Emphasis', value: 'em'},
             ],
+            annotations: [
+              defineArrayMember({
+                type: 'object',
+                name: 'explanation',
+                title: 'Forklaring',
+                icon: <FontAwesomeIcon icon={faInfoCircle} />,
+                fields: [
+                  defineField({
+                    name: 'title',
+                    title: 'Tittel',
+                    type: 'string',
+                  }),
+                  defineField({
+                    name: 'content',
+                    title: 'Innhold',
+                    type: 'text',
+                  }),
+                ],
+              }),
+            ],
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'isWrittenByAI',
+      title: 'Er dette innholdet laget av KI?',
+      validation: (rule) =>
+        rule.custom((_, context: any) => {
+          if (
+            context.document.content !== undefined &&
+            context.document.content.length > 0 &&
+            context.document.isWrittenByAI === undefined
+          ) {
+            return 'Siden du har innhold må du oppgi om det er brukt KI eller ikke'
+          }
+          return true
+        }),
+      hidden: (context: any) => {
+        return context.document.content === undefined || context.document.content.length === 0
+      },
+      type: 'boolean',
+      description: 'Hvis dette innholdet er laget av KI må du opplyse om dette',
+    }),
+    defineField({
+      name: 'tags',
+      type: 'array',
+      options: {
+        layout: 'tags',
+      },
+      of: [
+        {
+          type: 'reference',
+          to: {
+            type: 'tag',
           },
         },
       ],
