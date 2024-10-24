@@ -11,5 +11,5 @@ jobs:
         uses: mikeal/npx@1.0.0
       - name: Deploy Sanity
         run: npx sanity deploy
-        working-directory: marius-tanker-sanity
+        working-directory: ./marius-tanker-sanity
 
