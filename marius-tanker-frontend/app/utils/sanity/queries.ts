@@ -1,10 +1,27 @@
 import groq from "groq";
 
+const TAG_QUERY = `
+            ...,
+            "slug": slug.current,
+            parent->{
+                ...,
+                "slug": slug.current
+            }
+`;
+
 const POST_QUERY = `
         ...,
         "imageUrl": image.asset->url,
         "slug": slug.current,
         "previewImageUrl": image.asset->url + "?h=600&w=600",
+        tags[]->{
+            ${TAG_QUERY}
+        }, 
+        imageCreditLine,
+        "creditLineFromUnsplash": {
+            "url": image.asset->source.url,
+            "line":  image.asset->creditLine
+        },
         author->{
             ...,
             "slug": slug.current,
@@ -21,5 +38,33 @@ export const LATEST_POSTS = groq`
 export const POST_BY_SLUG = groq`
     *[_type=="post" && slug.current==$slug] [0] {
         ${POST_QUERY}
+    }
+`;
+
+export const ALL_TAGS = groq`
+    *[_type=="tag"] | order(_createdAt desc) {
+        ${TAG_QUERY}
+    }
+`;
+
+export const POSTS_BY_TAG = groq`
+    {
+        "tag": *[_type=="tag" && slug.current==$slug][0] {
+            ${TAG_QUERY}
+        },
+        "posts": *[_type=="post" && $slug in tags[]->slug.current] {
+            ${POST_QUERY}
+        }
+
+    }
+`;
+
+export const SEARCH_QUERY = groq` {
+    "tags": *[_type=="tag"]{
+        ${TAG_QUERY}
+    },
+    "posts": *[_type=="post" && select($search != null => (title match $search + "*" || pt::text(content) match $search + "*" || $search + "*" match author->name), true) && select($tags != null => references(*[_type=="tag" && title in $tags]._id), true)] {
+            ${POST_QUERY} 
+        }
     }
 `;

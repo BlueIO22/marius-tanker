@@ -8,6 +8,8 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import SearchInput from "./lib/search/SearchInput";
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -47,17 +49,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <div className="flex h-screen flex-col p-10 max-w-[1200px] m-auto">
-      <div>
-        <h1 className="text-5xl">
-          Velkommen til{" "}
-          <Link className="hover:underline" to="/">
-            Marius Tanker
-          </Link>
-        </h1>
-        <p className="italic text-xl mt-2">- en koselig side med mye rart</p>
+    <div className="overflow-hidden flex pt-5 pl-5 flex-col lg:p-10 lg:max-w-[1000px] m-auto">
+      <div
+        style={{
+          transition: "all 1s linear",
+        }}
+        className="flex flex-row gap-5 justify-between items-center"
+      >
+        <div>
+          <h1 className="text-5xl">
+            Velkommen til{" "}
+            <Link className="hover:underline" to="/">
+              Marius Tanker
+            </Link>
+          </h1>
+          <p className="italic text-xl mt-2">- en koselig side med mye rart</p>
+        </div>
+        <SearchInput />
       </div>
-      <Outlet />
+
+      <div>
+        {" "}
+        <Outlet />
+      </div>
     </div>
   );
 }
