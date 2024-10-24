@@ -19,7 +19,7 @@ export default function TagsPage() {
           return (
             <li className="text-2xl mb-5" key={tag._id}>
               <Link
-                className=" hover:bg-white hover:text-black hover:p-1"
+                className=" hover:bg-primary hover:text-secondary hover:p-1"
                 to={"/tags/" + tag.slug}
               >
                 {tag.title}

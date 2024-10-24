@@ -9,7 +9,9 @@ import {
 } from "@remix-run/react";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { useLocalStorage } from "usehooks-ts";
 import SearchInput from "./lib/search/SearchInput";
+import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -30,8 +32,10 @@ export const headers: HeadersFunction = () => ({
 });
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [value] = useLocalStorage("marius-tanker-theme", false);
+
   return (
-    <html lang="en">
+    <html className={value ? "dark" : "light"} lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,7 +53,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <div className="overflow-hidden flex pt-5 pl-5 flex-col lg:p-10 lg:max-w-[1000px] m-auto">
+    <div className=" overflow-hidden dark:bg-black flex pt-5 pl-5 flex-col lg:p-10 lg:max-w-[1000px] m-auto">
       <div
         style={{
           transition: "all 1s linear",
@@ -65,7 +69,10 @@ export default function App() {
           </h1>
           <p className="italic text-xl mt-2">- en koselig side med mye rart</p>
         </div>
-        <SearchInput />
+        <div className="flex">
+          <ToggleTheme />
+          <SearchInput />
+        </div>
       </div>
 
       <div>

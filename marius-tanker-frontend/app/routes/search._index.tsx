@@ -64,7 +64,7 @@ export default function SearchPage() {
           }
         }}
         placeholder="Søk etter tittel, tags eller forfatter"
-        className="rounded-full border-2 border-dashed w-full p-8 text-2xl "
+        className="rounded-xl border-2 border-dashed w-full p-8 text-2xl "
       />
       {tags && (
         <div className="mt-5 flex lg:flex-row flex-col gap-5">
@@ -81,8 +81,10 @@ export default function SearchPage() {
                   }
                 }}
                 className={`p-2 ${
-                  selectedTags?.includes(tag.title) ? "bg-white text-black" : ""
-                } hover:bg-white rounded-full hover:text-black cursor-pointer`}
+                  selectedTags?.includes(tag.title)
+                    ? "bg-secondary text-primary"
+                    : ""
+                } hover:bg-secondary rounded-full hover:text-primary cursor-pointer`}
               >
                 {tag.title}
               </div>

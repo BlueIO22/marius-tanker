@@ -18,7 +18,7 @@ export default function Explanation({
           {children}
         </span>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-80 border-2 border-secondary">
         <span className="font-bold mb-2 block">{explanation.title}</span>
         <span className="max-h-[200px] overflow-auto">
           {explanation.content}

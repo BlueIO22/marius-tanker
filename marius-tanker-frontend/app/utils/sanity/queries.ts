@@ -29,6 +29,12 @@ const POST_QUERY = `
         }
 `;
 
+const AUTHOR_QUERY = `
+    ...,
+    "slug": slug.current,
+    "imageUrl": image.asset->url + "?h=300&w=300&fit=crop"
+`;
+
 export const LATEST_POSTS = groq`
     *[_type=="post"] | order(_createdAt desc) [0..10] {
         ${POST_QUERY}
@@ -65,6 +71,15 @@ export const SEARCH_QUERY = groq` {
     },
     "posts": *[_type=="post" && select($search != null => (title match $search + "*" || pt::text(content) match $search + "*" || $search + "*" match author->name), true) && select($tags != null => references(*[_type=="tag" && title in $tags]._id), true)] {
             ${POST_QUERY} 
+        }
+    }
+`;
+
+export const AUTHOR_BY_SLUG = groq`
+    *[_type=="author" && slug.current==$slug][0] {
+        ${AUTHOR_QUERY},
+        "posts": *[_type=="post" && references(^._id)] {
+            ${POST_QUERY}
         }
     }
 `;

@@ -105,7 +105,7 @@ export default function Post() {
         {post.author && (
           <Link
             to={"/author/" + post.author.slug}
-            className="flex mb-5 w-[180px] cursor-pointer p-2 rounded-full hover:bg-white hover:text-black flex-row gap-2 items-center"
+            className="flex mb-5 w-[180px] cursor-pointer p-2 rounded-full hover:bg-secondary hover:text-primary flex-row gap-2 items-center"
           >
             <img
               className="h-[32px] rounded-full"

@@ -13,6 +13,7 @@ export type SanityAuthor = {
   age?: number;
   imageUrl: string;
   description: [];
+  posts?: SanityPost[];
 };
 
 export type SanityPost = {
