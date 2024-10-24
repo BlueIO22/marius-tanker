@@ -1,23 +1,22 @@
-name: Deploy Sanity
+name: Deploy Sanity Studio
 on:
   push:
     branches: [main]
 jobs:
-  sanity-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: marius-tanker-sanity
-    name: Deploy Sanity
-    steps: 
-      - uses: actions/checkout@v3
-      - name: GitHub Action for npx
-        uses: mikeal/npx@1.0.0
-      - name: Checkout dir
-        run: cd ./marius-tanker-sanity
-      - uses: sanity-io/github-action-sanity@v0.7-alpha
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_READ_TOKEN }} 
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
         with:
-          args: deploy  
-
+          node-version: 12.x
+      - name: Install dependencies
+        run: |
+          cd marius-tanker-sanity
+          npm install
+      - name: Deploy Sanity Studio
+        run: |
+          set -e
+          cd marius-tanker-sanity
+          SANITY_AUTH_TOKEN="${{ secrets.SANITY_READ_TOKEN }}" npx sanity deploy
