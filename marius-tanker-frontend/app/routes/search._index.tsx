@@ -64,10 +64,10 @@ export default function SearchPage() {
           }
         }}
         placeholder="Søk etter tittel, tags eller forfatter"
-        className="rounded-xl border-2 border-dashed w-full p-8 text-2xl "
+        className="rounded-xl border-2 border-dashed w-full p-8 lg:text-2xl text-[16px]"
       />
       {tags && (
-        <div className="mt-5 flex lg:flex-row flex-col gap-5">
+        <div className="mt-5 flex flex-row lg:gap-5 gap-2 overflow-x-auto">
           {tags.map((tag: SanityTag) => {
             return (
               <div

@@ -16,7 +16,7 @@ import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" }, 
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
     href: "https://fonts.gstatic.com",
@@ -54,7 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <div className=" overflow-hidden dark:bg-black flex pt-5 pl-5 flex-col lg:p-10 lg:max-w-[1000px] m-auto">
+    <div className="overflow-hidden dark:bg-black flex pt-5 pl-5 pr-5 flex-col  lg:p-10 lg:max-w-[1000px] m-auto">
       <div
         style={{
           transition: "all 1s linear",
@@ -62,10 +62,9 @@ export default function App() {
         className="flex flex-row gap-5 justify-between items-center"
       >
         <div>
-          <h1 className="text-5xl">
-            Velkommen til{" "}
+          <h1 className="fall-like-drunk lg:text-5xl text-2xl ">
             <Link className="hover:underline" to="/">
-              Marius Tanker
+              Velkommen til Marius Tanker
             </Link>
           </h1>
           <p className="text-fly-in italic text-xl mt-2">
@@ -78,10 +77,12 @@ export default function App() {
         </div>
       </div>
 
-      <div>
+      <div className="mt-5">
         {" "}
         <Outlet />
       </div>
+
+      <footer className="p-5"></footer>
     </div>
   );
 }

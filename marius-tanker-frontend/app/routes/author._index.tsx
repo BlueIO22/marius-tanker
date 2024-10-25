@@ -22,7 +22,7 @@ export default function AuthorsPage() {
             <Link
               key={author._id}
               to={"/author/" + author.slug}
-              className="flex mb-5 w-[400px] border-2 cursor-pointer p-2  hover:bg-secondary hover:text-primary flex-row gap-2 items-center"
+              className="flex mb-5 lg:w-[400px] border-2 cursor-pointer p-2  hover:bg-secondary hover:text-primary flex-row gap-2 items-center"
             >
               <img
                 className="h-[64px] rounded-full"
