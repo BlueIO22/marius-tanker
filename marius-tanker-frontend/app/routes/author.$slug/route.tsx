@@ -35,7 +35,10 @@ export default function Author() {
           alt={author.name}
         />
         <div className="flex flex-col gap-5">
-          <h1 className="text-4xl font-bold">{author.name}</h1>
+          <div>
+            <h1 className="text-4xl font-bold">{author.name}</h1>
+            <p className="text-lg">{author.occupation}</p>
+          </div>
           <PortableText components={components} value={author.description} />
         </div>
       </div>

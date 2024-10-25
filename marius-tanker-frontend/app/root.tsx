@@ -10,12 +10,13 @@ import {
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { useLocalStorage } from "usehooks-ts";
+import "./global.css";
 import SearchInput from "./lib/search/SearchInput";
 import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
 import "./tailwind.css";
 
 export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" }, 
   {
     rel: "preconnect",
     href: "https://fonts.gstatic.com",
@@ -67,7 +68,9 @@ export default function App() {
               Marius Tanker
             </Link>
           </h1>
-          <p className="italic text-xl mt-2">- en koselig side med mye rart</p>
+          <p className="text-fly-in italic text-xl mt-2">
+            - en koselig side med mye rart
+          </p>
         </div>
         <div className="flex">
           <ToggleTheme />

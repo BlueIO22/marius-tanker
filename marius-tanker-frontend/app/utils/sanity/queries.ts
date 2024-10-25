@@ -49,7 +49,8 @@ export const POST_BY_SLUG = groq`
 
 export const ALL_TAGS = groq`
     *[_type=="tag"] | order(_createdAt desc) {
-        ${TAG_QUERY}
+        ${TAG_QUERY},
+        "countOfPosts": count(*[_type=="post" && references(^._id)])
     }
 `;
 
@@ -81,5 +82,11 @@ export const AUTHOR_BY_SLUG = groq`
         "posts": *[_type=="post" && references(^._id)] {
             ${POST_QUERY}
         }
+    }
+`;
+
+export const ALL_AUTHORS = groq`
+    *[_type=="author"] | order(name) {
+        ${AUTHOR_QUERY}
     }
 `;

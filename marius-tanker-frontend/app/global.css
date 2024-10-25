@@ -1,0 +1,12 @@
+.text-fly-in {
+    animation: fly-in 1s;
+}
+
+@keyframes fly-in {
+    0% {
+        transform: translateX(-500px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}

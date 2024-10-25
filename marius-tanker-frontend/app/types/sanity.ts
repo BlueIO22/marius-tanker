@@ -4,6 +4,7 @@ export type SanityTag = {
   title: string;
   slug: string;
   parent?: SanityTag;
+  countOfPosts?: number;
 };
 
 export type SanityAuthor = {
@@ -12,6 +13,7 @@ export type SanityAuthor = {
   slug: string;
   age?: number;
   imageUrl: string;
+  occupation: string;
   description: [];
   posts?: SanityPost[];
 };

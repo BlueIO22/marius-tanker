@@ -64,7 +64,7 @@ export default function Post() {
     <div className="w-full h-full mt-10 ">
       <div>
         <img
-          className="border-2 mb-5 max-h-[500px] w-full object-cover object-center"
+          className="border-2 mb-2 max-h-[500px] w-full object-cover object-center"
           src={post.imageUrl}
           alt={post.title}
         />
@@ -90,6 +90,7 @@ export default function Post() {
                 <Link
                   target="_blank"
                   rel="noreferrer"
+                  className="hover:underline"
                   to={post.creditLineFromUnsplash?.url ?? ""}
                 >
                   {post.creditLineFromUnsplash?.line}
@@ -112,7 +113,10 @@ export default function Post() {
               src={post.author.imageUrl}
               alt={post.author + " bilde"}
             />
-            <p>{post.author.name}</p>
+            <div>
+              <p>{post.author.name}</p>
+              <p className="text-xs">{post.author.occupation}</p>
+            </div>
           </Link>
         )}
         <h1 className="text-3xl">{post.title}</h1>
