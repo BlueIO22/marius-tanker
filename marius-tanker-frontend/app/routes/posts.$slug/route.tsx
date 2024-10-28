@@ -69,9 +69,9 @@ export default function Post() {
           alt={post.title}
         />
       </div>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-col lg:flex-row justify-between">
         <>
-          <div className="flex flex-col lg:flex-row gap-5">
+          <div className="flex flex-col lg:flex-row gap-5 order-2 lg:order-1">
             <p>
               <FontAwesomeIcon className="mr-2" icon={faCalendar} />
               {dayjs(post._createdTime).format("DD.MM.YYYY hh:mm")}
@@ -84,8 +84,8 @@ export default function Post() {
             )}
           </div>
           {hasImageCrediting && (
-            <div>
-              <FontAwesomeIcon icon={faCamera} className="mr-2" />
+            <div className="flex flex-row order-1 lg:order-2">
+              <FontAwesomeIcon icon={faCamera} className="mr-2 " />
               {isUnsplash ? (
                 <Link
                   target="_blank"
@@ -122,7 +122,7 @@ export default function Post() {
         <h1 className="text-3xl">{post.title}</h1>
         <p className="text-xl mt-2"> - {post.subtitle}</p>
 
-        <div>
+        <div className="mt-5">
           <PortableText
             components={postContentComponents}
             value={post.content}

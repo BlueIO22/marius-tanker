@@ -9,7 +9,8 @@ import {
 } from "@remix-run/react";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { useLocalStorage } from "usehooks-ts";
+import { useEffect } from "react";
+import { useReadLocalStorage } from "usehooks-ts";
 import "./global.css";
 import SearchInput from "./lib/search/SearchInput";
 import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
@@ -33,10 +34,8 @@ export const headers: HeadersFunction = () => ({
 });
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [value] = useLocalStorage("marius-tanker-theme", false);
-
   return (
-    <html className={value ? "dark" : "light"} lang="en">
+    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -53,6 +52,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const isDarkMode = useReadLocalStorage("marius-tanker-theme");
+
+  useEffect(() => {
+    if (window === undefined) {
+      return;
+    }
+    if (isDarkMode) {
+      window.document.documentElement.classList.toggle("dark", true);
+    } else {
+      window.document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
   return (
     <div className="overflow-hidden dark:bg-black flex pt-5 pl-5 pr-5 flex-col  lg:p-10 lg:max-w-[1000px] m-auto">
       <div

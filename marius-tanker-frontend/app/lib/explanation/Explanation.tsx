@@ -14,7 +14,7 @@ export default function Explanation({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <span className="border-b-2 border-dashed cursor-pointer">
+        <span className="border-b-2 border-secondary border-dashed cursor-pointer">
           {children}
         </span>
       </PopoverTrigger>
