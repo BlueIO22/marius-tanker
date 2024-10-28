@@ -38,6 +38,12 @@ export default defineType({
       type: 'number',
     }),
     defineField({
+      name: 'occupation',
+      title: 'Yrke',
+      description: 'Yrke eller virke',
+      type: 'string',
+    }),
+    defineField({
       name: 'description',
       description: 'Beskrivelse av forfatter',
       type: 'array',
