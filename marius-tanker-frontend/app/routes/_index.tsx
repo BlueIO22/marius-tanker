@@ -25,11 +25,21 @@ export default function Index() {
   const latestPosts = useLoaderData<typeof loader>();
 
   return (
-    <div className="lg:p-10 mt-5 w-full justify-start">
+    <div
+      className="lg:p-10 mt-5 w-full justify-start "
+      style={{
+        backgroundColor: "transparent",
+      }}
+    >
       <h1 className="inline w-full text-xl font-bold border-b-2 border-white">
         Latest and greatest!
       </h1>
-      <ul className="flex lg:p-10 mt-5 flex-col gap-5">
+      <ul
+        style={{
+          backgroundColor: "transparent",
+        }}
+        className="flex lg:p-10 mt-5 flex-col gap-5 backdrop-opacity-0 "
+      >
         {latestPosts.map((post: SanityPost) => {
           return <PostCard post={post} key={post._id} />;
         })}

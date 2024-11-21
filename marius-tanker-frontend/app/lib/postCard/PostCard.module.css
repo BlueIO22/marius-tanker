@@ -1,0 +1,14 @@
+.postCard {
+  transition: all 500ms linear;
+  transform: rotateX(0deg) rotateY(0eg);
+  z-index: 0;
+  position: relative;
+}
+
+@media screen and (min-width: 800px) {
+  .postCard:hover {
+    transform: rotate3d(1, -60, 0, 20deg) scale(1.2) translate(50px, 20px);
+    margin: 5rem, 0rem, 5rem, 0rem;
+    z-index: 100;
+  }
+}

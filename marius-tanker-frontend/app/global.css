@@ -1,25 +1,41 @@
 .text-fly-in {
-    animation: fly-in 1s;
+  animation: fly-in 1s;
 }
 
 .fall-like-drunk:hover {
-    animation: fall-like-drunk-down 2s alternate-reverse infinite;
+  animation: fall-like-drunk-down 2s alternate-reverse infinite;
 }
 
 @keyframes fly-in {
-    0% {
-        transform: translateX(-500px);
-    }
-    100% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(-500px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @keyframes fall-like-drunk-down {
-    0% {
-        transform: translate(-20px);
-    }  
-    100% {
-        transform: translate(0);
-    }
+  0% {
+    transform: translate(-20px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0) rotate(10deg);
+  }
+  40% {
+    transform: translateY(-30px) rotate(10deg);
+  }
+  60% {
+    transform: translateY(-15px) rotate(10deg);
+  }
 }

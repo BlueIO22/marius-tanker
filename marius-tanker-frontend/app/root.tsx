@@ -15,6 +15,7 @@ import "./global.css";
 import SearchInput from "./lib/search/SearchInput";
 import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
 import "./tailwind.css";
+import { NavigationBar } from "./lib/navigationMenu/navigation-bar";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -65,7 +66,7 @@ export default function App() {
     }
   }, [isDarkMode]);
   return (
-    <div className="overflow-hidden dark:bg-black flex pt-5 pl-5 pr-5 flex-col  lg:p-10 lg:max-w-[1000px] m-auto">
+    <div className="overflow-hidden flex pt-5 pl-5 pr-5 flex-col  lg:p-10 lg:max-w-[1000px] m-auto">
       <div
         style={{
           transition: "all 1s linear",
@@ -88,7 +89,12 @@ export default function App() {
         </div>
       </div>
 
-      <div className="mt-5">
+      <div
+        className="mt-5"
+        style={{
+          backgroundColor: "transparent",
+        }}
+      >
         {" "}
         <Outlet />
       </div>
