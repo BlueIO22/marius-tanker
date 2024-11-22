@@ -79,7 +79,7 @@ export const SEARCH_QUERY = groq` {
 export const AUTHOR_BY_SLUG = groq`
     *[_type=="author" && slug.current==$slug][0] {
         ${AUTHOR_QUERY},
-        "posts": *[_type=="post" && references(^._id)] {
+        "posts": *[_type=="post" && references(^._id)] | order(_createdAt desc) {   
             ${POST_QUERY}
         }
     }

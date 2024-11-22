@@ -1,14 +1,27 @@
 .postCard {
-  transition: all 500ms linear;
+  transition: all 250ms linear;
   transform: rotateX(0deg) rotateY(0eg);
   z-index: 0;
   position: relative;
 }
 
+@keyframes flyInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
 @media screen and (min-width: 800px) {
   .postCard:hover {
-    transform: rotate3d(1, -60, 0, 20deg) scale(1.2) translate(50px, 20px);
+    transform: scale(1.05);
     margin: 5rem, 0rem, 5rem, 0rem;
     z-index: 100;
+  }
+  .contentContainer {
+    animation: flyInFromLeft 0.5s ease-in-out;
   }
 }

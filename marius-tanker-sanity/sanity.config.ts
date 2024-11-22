@@ -5,7 +5,8 @@ import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './schemaTypes'
 
 export default defineConfig({
-  name: 'default',
+  name: 'marius-tanker',
+  studioHost: 'marius-tanker',
   title: 'marius-tanker',
 
   projectId: 'afqsdc5q',

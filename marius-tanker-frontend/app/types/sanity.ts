@@ -23,6 +23,7 @@ export type SanityPost = {
   slug: string;
   title: string;
   subtitle: string;
+  excerpt: string;
   _createdTime: string;
   content: [];
   imageUrl: string;

@@ -29,6 +29,13 @@ export default defineType({
       validation: (v) => v.required(),
     }),
     defineField({
+      name: 'excerpt',
+      type: 'text',
+      title: 'Utdrag',
+      description: 'Kort utdrag av innlegget',
+      validation: (v) => v.required(),
+    }),
+    defineField({
       name: 'author',
       type: 'reference',
       to: {type: 'author'},

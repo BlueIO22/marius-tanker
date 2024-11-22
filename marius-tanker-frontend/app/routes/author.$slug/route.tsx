@@ -28,7 +28,7 @@ export default function Author() {
 
   return (
     <>
-      <div className="mt-10 p-5 lg:p-10 flex flex-col lg:flex-row gap-10">
+      <div className="mt-10 p-5 lg:p-5 flex flex-col lg:flex-row gap-10">
         <img
           className="border-2 shadow-xl rounded-full"
           src={author.imageUrl}
