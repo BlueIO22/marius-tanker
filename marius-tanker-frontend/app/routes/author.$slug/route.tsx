@@ -5,6 +5,8 @@ import PostCard from "~/lib/postCard/PostCard";
 import { SanityAuthor, SanityPost } from "~/types/sanity";
 import { AUTHOR_BY_SLUG } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity";
+import { useState } from "react";
+import Suprise from "~/lib/Suprise";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await client.fetch(AUTHOR_BY_SLUG, {
@@ -18,6 +20,8 @@ export default function Author() {
   const author = useLoaderData<typeof loader>();
   console.log(author);
 
+  const [counter, setCounter] = useState(0);
+
   const components: any = {
     block: {
       normal: ({ children }) => {
@@ -28,8 +32,12 @@ export default function Author() {
 
   return (
     <>
+      <Suprise counter={counter} />
       <div className="mt-10 p-5 lg:p-5 flex flex-col lg:flex-row gap-10">
         <img
+          onClick={() => {
+            setCounter(counter + 1);
+          }}
           className="border-2 shadow-xl rounded-full"
           src={author.imageUrl}
           alt={author.name}

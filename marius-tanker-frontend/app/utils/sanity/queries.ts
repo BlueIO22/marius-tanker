@@ -56,10 +56,10 @@ export const ALL_TAGS = groq`
 
 export const POSTS_BY_TAG = groq`
     {
-        "tag": *[_type=="tag" && slug.current==$slug][0] {
+        "tag": *[_type=="tag" && slug.current==$slug][0] { 
             ${TAG_QUERY}
         },
-        "posts": *[_type=="post" && $slug in tags[]->slug.current] {
+        "posts": *[_type=="post" && $slug in tags[]->slug.current] | order(_createdAt desc) {
             ${POST_QUERY}
         }
 

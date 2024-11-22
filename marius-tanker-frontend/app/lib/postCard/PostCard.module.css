@@ -16,7 +16,8 @@
 }
 
 @media screen and (min-width: 800px) {
-  .postCard:hover {
+  .postCard:hover,
+  .postCard:focus {
     transform: scale(1.05);
     margin: 5rem, 0rem, 5rem, 0rem;
     z-index: 100;

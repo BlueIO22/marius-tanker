@@ -19,17 +19,19 @@ export default function PostCard({
   return (
     <Link
       to={"/posts/" + post.slug}
-      className="z-0 hover:z-10"
+      className={cn("z-0 hover:z-10", styles.postCard)}
       onMouseOver={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onTouchMove={() => setIsHovering(true)}
       onTouchCancel={() => setIsHovering(false)}
+      onFocusCapture={() => setIsHovering(true)}
+      onBlur={() => setIsHovering(false)}
+      tabIndex={0}
     >
       <li
         className={cn(
-          "grid p-5 lg:grid-cols-2 relative hover:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center lg:p-5 pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
-          className,
-          styles.postCard
+          "grid p-5 lg:grid-cols-2 relative hover:border-2 focus:border-secondary focus:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center lg:p-5 pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
+          className
         )}
       >
         {isHovering && (
