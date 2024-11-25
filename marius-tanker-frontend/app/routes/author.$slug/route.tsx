@@ -18,7 +18,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export default function Author() {
   const author = useLoaderData<typeof loader>();
-  console.log(author);
 
   const [counter, setCounter] = useState(0);
 

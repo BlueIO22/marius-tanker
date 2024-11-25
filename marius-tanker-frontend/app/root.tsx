@@ -51,7 +51,6 @@ export const headers: HeadersFunction = () => ({
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request);
-  console.log("givenname", user?.displayName);
 
   return user;
 };
@@ -124,7 +123,6 @@ export default function App() {
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  {" "}
                   <button className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
                     <GitHubLogoIcon /> {(user as any)?.displayName}
                   </button>

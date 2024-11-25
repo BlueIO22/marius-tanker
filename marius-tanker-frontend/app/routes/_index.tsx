@@ -1,11 +1,9 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import PostCard from "~/lib/postCard/PostCard";
-import { authenticator } from "~/service/auth.server";
 import { SanityPost } from "~/types/sanity";
 import { LATEST_POSTS } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity";
-import { json } from "@remix-run/node";
 
 export const loader = async () => {
   const response = await client.fetch(LATEST_POSTS);
