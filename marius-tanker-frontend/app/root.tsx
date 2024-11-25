@@ -1,11 +1,17 @@
-import type { HeadersFunction, LinksFunction } from "@remix-run/node";
+import type {
+  HeadersFunction,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import {
+  Form,
   Link,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -15,7 +21,17 @@ import "./global.css";
 import SearchInput from "./lib/search/SearchInput";
 import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
 import "./tailwind.css";
-import { NavigationBar } from "./lib/navigationMenu/navigation-bar";
+import { authenticator } from "./service/auth.server";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./components/ui/dropdown-menu";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,6 +49,13 @@ export const links: LinksFunction = () => [
 export const headers: HeadersFunction = () => ({
   "Cache-Control": "public, max-age=300, s-maxage=3600",
 });
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await authenticator.isAuthenticated(request);
+  console.log("givenname", user?.displayName);
+
+  return user;
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -52,9 +75,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+function getDayOfTheWeek() {
+  const date = new Date();
+  const dayOfTheWeek = date.toLocaleDateString("no-NO", { weekday: "long" });
+  return dayOfTheWeek;
+}
+
 export default function App() {
   const isDarkMode = useReadLocalStorage("marius-tanker-theme");
-
+  const user = useLoaderData<typeof loader>();
+  const dayOfTheWeek = getDayOfTheWeek();
   useEffect(() => {
     if (window === undefined) {
       return;
@@ -83,6 +113,44 @@ export default function App() {
             - en koselig side med mye rart
           </p>
         </div>
+
+        <div>
+          {!user ? (
+            <Form action="/auth/github" method="post">
+              <button className="mb-5 rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all">
+                Login with GitHub
+              </button>
+            </Form>
+          ) : (
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  {" "}
+                  <button className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
+                    <GitHubLogoIcon /> {(user as any)?.displayName}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>
+                    God {dayOfTheWeek} {(user as any)?.name.givenName}
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Kommentarer</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Form
+                      className="w-full"
+                      action="/auth/github/logout"
+                      method="post"
+                    >
+                      <button className="w-full text-left">Log out</button>
+                    </Form>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          )}
+        </div>
+
         <div className="flex">
           <ToggleTheme />
           <SearchInput />

@@ -1,14 +1,18 @@
-import type { MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
 import PostCard from "~/lib/postCard/PostCard";
+import { authenticator } from "~/service/auth.server";
 import { SanityPost } from "~/types/sanity";
 import { LATEST_POSTS } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity";
+import { json } from "@remix-run/node";
 
 export const loader = async () => {
   const response = await client.fetch(LATEST_POSTS);
 
-  return response as SanityPost[];
+  return {
+    posts: response as SanityPost[],
+  };
 };
 
 export const meta: MetaFunction = () => {
@@ -22,7 +26,7 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const latestPosts = useLoaderData<typeof loader>();
+  const data: any = useLoaderData<typeof loader>();
 
   return (
     <div
@@ -40,7 +44,7 @@ export default function Index() {
         }}
         className="flex lg:p-10 mt-5 flex-col gap-5 backdrop-opacity-0 "
       >
-        {latestPosts.map((post: SanityPost) => {
+        {data.posts.map((post: SanityPost) => {
           return <PostCard post={post} key={post._id} />;
         })}
       </ul>

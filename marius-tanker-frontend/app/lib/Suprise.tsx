@@ -7,6 +7,7 @@ export default function Suprise({ counter }: { counter: number }) {
     if (counter > 29) {
       jsConfetti?.addConfetti({
         emojis: ["👨‍💻", "👩‍💻", "💻", "🖥️", "📱", "🖱️", "⌨️"],
+        confettiNumber: 10,
       });
     }
   }, [counter]);

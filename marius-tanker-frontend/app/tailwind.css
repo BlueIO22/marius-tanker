@@ -1,22 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Karla:ital,wght@0,200..800;1,200..800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 html,
-body { 
-
+body {
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
 
-  font-family: "DynaPuff", system-ui;
+  /* font-family: "DynaPuff", system-ui;
   font-optical-sizing: auto;
   font-style: normal;
   font-variation-settings:
-    "wdth" 100;
+    "wdth" 100; */
 }
 
 @layer base {
@@ -82,4 +80,4 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-} 
+}
