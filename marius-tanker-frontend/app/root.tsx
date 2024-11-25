@@ -22,7 +22,6 @@ import SearchInput from "./lib/search/SearchInput";
 import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
 import "./tailwind.css";
 import { authenticator } from "./service/auth.server";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -42,7 +41,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap",
   },
 ];
 
