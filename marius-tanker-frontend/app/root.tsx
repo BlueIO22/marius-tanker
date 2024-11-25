@@ -115,8 +115,9 @@ export default function App() {
         <div>
           {!user ? (
             <Form action="/auth/github" method="post">
-              <button className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
-                <GitHubLogoIcon /> Logg inn
+              <button className="rounded-lg lg:w-[120px] lg:border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
+                <GitHubLogoIcon />{" "}
+                <span className="hidden lg:block">Logg inn</span>
               </button>
             </Form>
           ) : (
