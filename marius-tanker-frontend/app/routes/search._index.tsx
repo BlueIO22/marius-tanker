@@ -64,7 +64,7 @@ export default function SearchPage() {
           }
         }}
         placeholder="Søk etter tittel, tags eller forfatter"
-        className="rounded-xl border-2 border-dashed w-full p-8 lg:text-2xl text-[16px]"
+        className="rounded-xl focus:shadow-lg transition-all border-2 border-dashed w-full p-8 lg:text-2xl text-[16px]"
       />
       {tags && (
         <div className="mt-5 flex flex-row lg:gap-5 gap-2 overflow-x-auto">
