@@ -30,6 +30,7 @@
     "@sanity/overlays": "^2.3.59",
     "@sanity/react-loader": "^1.10.10",
     "@supabase/supabase-js": "^2.46.1",
+    "@types/webcrypto": "^0.0.30",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
