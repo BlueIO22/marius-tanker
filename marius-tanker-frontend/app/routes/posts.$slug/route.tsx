@@ -259,7 +259,7 @@ export default function Post() {
                     className="border-t-2 py-2 border-secondary px-2"
                   >
                     <p className="font-bold flex justify-between">
-                      <span>@{comment.userId}</span>
+                      <span className="font-normal">@{comment.userId}</span>
                       <span className="flex gap-2">
                         {dayjs(comment.created_at).format("DD.MM.YYYY hh:mm")}
                         {user && comment.userId === user.displayName && (
