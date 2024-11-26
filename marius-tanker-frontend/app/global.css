@@ -13,15 +13,6 @@ body {
   animation: fall-like-drunk-down 2s alternate-reverse infinite;
 }
 
-@keyframes fly-in {
-  0% {
-    transform: translateX(-500px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
 @keyframes fall-like-drunk-down {
   0% {
     transform: translate(-20px);

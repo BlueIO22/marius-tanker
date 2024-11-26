@@ -14,6 +14,7 @@ import {
   useNavigation,
   useSubmit,
 } from "@remix-run/react";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import dayjs from "dayjs";
 import Explanation from "~/lib/explanation/Explanation";
 import { supabase } from "~/service/supabase.server";
@@ -248,92 +249,82 @@ export default function Post() {
           </div>
         )}
 
-        {comments.length > 0 && (
-          <div className="p-2 flex flex-col gap-2">
-            <h2 className="">Kommentarer ({comments.length}):</h2>
-            <div className="mt-5 border-b-2 border-b-secondary mb-5">
-              {comments.map((comment: Comment) => {
-                return (
-                  <div
-                    key={comment.id}
-                    className="border-t-2 py-2 border-secondary px-2"
-                  >
-                    <p className="font-bold flex justify-between">
-                      <span className="font-normal">@{comment.userId}</span>
-                      <span className="flex gap-2">
-                        {dayjs(comment.created_at).format("DD.MM.YYYY hh:mm")}
-                        {user && comment.userId === user.displayName && (
-                          <Form
-                            action={action}
-                            method="delete"
-                            navigate={false}
-                          >
-                            <input type="hidden" name="id" value={comment.id} />
-                            <input
-                              type="hidden"
-                              name="userId"
-                              value={user?.displayName}
-                            />
-                            <button type="submit">
-                              <FontAwesomeIcon icon={faTrash} />
-                            </button>
-                          </Form>
-                        )}
-                      </span>
-                    </p>
-                    <p>{comment.text}</p>
-                  </div>
-                );
-              })}
-            </div>
-            {user ? (
-              <div>
-                <h2>Vil du kommentere og mene noe spesielt?</h2>
-                <Form
-                  navigate={false}
-                  method="post"
-                  action={action}
-                  onSubmit={(event) => {
-                    submit(event.target as HTMLFormElement);
-
-                    event.preventDefault();
-                    setText("");
-                  }}
-                  className="flex items-center gap-2 w-full mt-5"
+        <div className="p-2 flex flex-col gap-2">
+          <h2 className="">Kommentarer ({comments.length}):</h2>
+          <div className="mt-5 border-b-2 border-b-secondary mb-5">
+            {comments.map((comment: Comment) => {
+              return (
+                <div
+                  key={comment.id}
+                  className="border-t-2 py-2 border-secondary px-2"
                 >
-                  <input
-                    type="hidden"
-                    name="userId"
-                    value={user?.displayName}
-                  />
-                  <input type="hidden" name="postId" value={post?.slug} />
-                  <textarea
-                    onChange={(e) => setText(e.target.value)}
-                    name="text"
-                    value={text}
-                    className="border-2 border-secondary p-2 w-[400px] rounded-lg text-secondary bg-primary h-full"
-                    placeholder="En mening..."
-                  />
-                  <button
-                    type="submit"
-                    className="bg-secondary text-primary p-2 rounded-lg"
-                  >
-                    Send
-                  </button>
-                </Form>
-              </div>
-            ) : (
+                  <p className="font-bold flex justify-between">
+                    <span className="font-normal">@{comment.userId}</span>
+                    <span className="flex gap-2">
+                      {dayjs(comment.created_at).format("DD.MM.YYYY hh:mm")}
+                      {user && comment.userId === user.displayName && (
+                        <Form action={action} method="delete" navigate={false}>
+                          <input type="hidden" name="id" value={comment.id} />
+                          <input
+                            type="hidden"
+                            name="userId"
+                            value={user?.displayName}
+                          />
+                          <button type="submit">
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </Form>
+                      )}
+                    </span>
+                  </p>
+                  <p>{comment.text}</p>
+                </div>
+              );
+            })}
+          </div>
+          {user ? (
+            <div>
+              <h2>Vil du kommentere og mene noe spesielt?</h2>
               <Form
+                navigate={false}
                 method="post"
-                action={`/auth/github?redirectUrl=/posts/${post.slug}`}
+                action={action}
+                onSubmit={(event) => {
+                  submit(event.target as HTMLFormElement);
+
+                  event.preventDefault();
+                  setText("");
+                }}
+                className="flex items-center gap-2 w-full mt-5"
               >
-                <button className="flex underline mt-2 gap-2 items-center">
-                  <GitHubLogoIcon /> Logg inn for å kommentere
+                <input type="hidden" name="userId" value={user?.displayName} />
+                <input type="hidden" name="postId" value={post?.slug} />
+                <textarea
+                  onChange={(e) => setText(e.target.value)}
+                  name="text"
+                  value={text}
+                  className="border-2 w-full border-secondary p-2  rounded-lg text-secondary bg-primary h-full"
+                  placeholder="En mening..."
+                />
+                <button
+                  type="submit"
+                  className="bg-secondary text-primary p-2 rounded-lg"
+                >
+                  Send
                 </button>
               </Form>
-            )}
-          </div>
-        )}
+            </div>
+          ) : (
+            <Form
+              method="post"
+              action={`/auth/github?redirectUrl=/posts/${post.slug}`}
+            >
+              <button className="flex underline mt-2 gap-2 items-center">
+                <GitHubLogoIcon /> Logg inn for å kommentere
+              </button>
+            </Form>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -137,7 +137,9 @@ export default function App() {
                     God {dayOfTheWeek} {(user as any)?.name.givenName}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Kommentarer</DropdownMenuItem>
+                  <Link to={"/comments"}>
+                    <DropdownMenuItem>Kommentarer</DropdownMenuItem>
+                  </Link>
                   <DropdownMenuItem>
                     <Form
                       className="w-full"
