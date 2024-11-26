@@ -4,6 +4,7 @@ import PostCard from "~/lib/postCard/PostCard";
 import { SanityPost } from "~/types/sanity";
 import { LATEST_POSTS } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export const loader = async () => {
   const response = await client.fetch(LATEST_POSTS);
