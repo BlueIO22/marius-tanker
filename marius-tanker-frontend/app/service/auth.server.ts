@@ -13,10 +13,7 @@ const gitHubStrategy = new GitHubStrategy(
   {
     clientId: process.env.GITHUB_AUTH_CLIENT_ID ?? "",
     clientSecret: process.env.GITHUB_AUTH_SECRET ?? "",
-    redirectURI:
-      process.env.NODE_ENV === "production"
-        ? "https://marius-tanker.no/auth/github/callback"
-        : "http://localhost:5173/auth/github/callback",
+    redirectURI: "https://marius-tanker.no/auth/github/callback",
   },
   async ({ accessToken, extraParams, profile }) => {
     return profile;
