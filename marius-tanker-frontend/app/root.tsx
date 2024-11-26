@@ -14,13 +14,12 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 
-import fontawesomecss from "./fontawesome/styles.css";
 import { useEffect } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import "./global.css";
 import SearchInput from "./lib/search/SearchInput";
 import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
-import "./tailwind.css";
+import tailwind from "./tailwind.css?url";
 import { authenticator } from "./service/auth.server";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import {
@@ -46,6 +45,10 @@ export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
     href: "fontawesomestyles.css",
+  },
+  {
+    rel: "stylesheet",
+    href: tailwind,
   },
 ];
 
@@ -116,7 +119,7 @@ export default function App() {
           </p>
         </div>
 
-        <div>
+        <div className="flex">
           {!user ? (
             <Form action="/auth/github" method="post">
               <button className="rounded-lg lg:w-[120px] lg:border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
