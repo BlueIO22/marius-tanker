@@ -50,7 +50,7 @@ export default function AuthorsPage() {
             <div
               key={x._id}
               className={
-                "p-5 my-5 border-2 hover:border-secondary tranistion-all"
+                "p-5 my-5 border-2 border-primary shadow-lg p-5 hover:border-secondary tranistion-all"
               }
             >
               <div className="flex gap-5 mb-5 border-b-2 pb-5">

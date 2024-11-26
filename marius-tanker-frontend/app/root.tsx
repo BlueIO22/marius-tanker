@@ -141,7 +141,9 @@ export default function App() {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <Link to={"/comments"}>
-                    <DropdownMenuItem>Kommentarer</DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      Kommentarer
+                    </DropdownMenuItem>
                   </Link>
                   <DropdownMenuItem>
                     <Form
