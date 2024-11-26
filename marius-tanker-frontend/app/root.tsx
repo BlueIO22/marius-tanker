@@ -32,6 +32,10 @@ import {
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const crypto = require("node:crypto").webcrypto;
+global.crypto = crypto;
+
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
