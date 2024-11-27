@@ -29,7 +29,7 @@ export default function Index() {
 
   return (
     <div
-      className="lg:p-10 mt-5 w-full justify-start "
+      className="mt-5 w-full justify-start "
       style={{
         backgroundColor: "transparent",
       }}

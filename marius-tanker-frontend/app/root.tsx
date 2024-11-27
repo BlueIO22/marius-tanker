@@ -166,6 +166,20 @@ export default function App() {
         </div>
       </div>
 
+      <div className="mt-5 italic py-5">
+        <ul className="flex flex-row gap-2 justify-center [&>li>a]:p-2 [&>li>a]:border-2 [&>li>a]:border-primary hover:[&>li>a]:border-secondary [&>li>a]:cursor-pointer [&>li>a]:rounded-lg hover:[&>li>a]:bg-secondary hover:[&>li>a]:text-primary hover:[&>li>a]:shadow-lg [&>li>a]:transition ">
+          <li>
+            <Link to="/">Hjem</Link>
+          </li>
+          <li>
+            <Link to="/posts">Artikler</Link>
+          </li>
+          <li>
+            <Link to="/author">Forfattere</Link>
+          </li>
+        </ul>
+      </div>
+
       <div
         className="mt-5"
         style={{

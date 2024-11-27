@@ -18,6 +18,7 @@ const POST_QUERY = `
             ${TAG_QUERY}
         }, 
         imageCreditLine,
+        "_createdTime": _createdAt,
         "creditLineFromUnsplash": {
             "url": image.asset->source.url,
             "line":  image.asset->creditLine
@@ -33,6 +34,12 @@ const AUTHOR_QUERY = `
     ...,
     "slug": slug.current,
     "imageUrl": image.asset->url + "?h=300&w=300&fit=crop"
+`;
+
+export const ALL_POSTS = groq`
+    *[_type=="post"] | order(_createdAt desc) {
+        ${POST_QUERY}   
+    }
 `;
 
 export const LATEST_POSTS = groq`
