@@ -22,7 +22,7 @@ export default function ToggleTheme() {
       }}
     >
       <FontAwesomeIcon
-        className={`text-secondary cursor-pointer rounded-full items-center w-[32px] h-[32px] justify-end underline text-3xl font-bold`}
+        className={`text-secondary cursor-pointer stroke-primary stroke-6 rounded-full items-center w-[32px] h-[32px] justify-end underline text-3xl font-bold`}
         icon={faLightbulb}
         shake={hover}
       />
