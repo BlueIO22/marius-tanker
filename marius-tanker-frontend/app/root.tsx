@@ -59,6 +59,8 @@ export const headers: HeadersFunction = () => ({
 });
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+
   const user = await authenticator.isAuthenticated(request);
 
   return user;
@@ -104,16 +106,16 @@ export default function App() {
   }, [isDarkMode]);
   return (
     <>
-      <div className="overflow-auto  flex-col m-auto">
+      <div className="overflow-auto flex-col m-auto">
         <div
           style={{
             transition: "all 1s linear",
           }}
-          className="fixed bg-primary border-b-2 z-[20] pt-5 pl-5 pr-5 pb-5  w-full"
+          className="fixed bg-primary z-[20] pt-5 pl-5 pr-5   w-full"
         >
-          <div className=" w-auto flex flex-col lg:flex-row gap-5 justify-between items-center overflow-auto">
-            <div className=" flex flex-row lg:flex-col">
-              <div>
+          <div className=" w-full flex flex-col lg:flex-row gap-5 justify-center items-center overflow-auto">
+            <div className="grid grid-cols-6 pb-2 border-b-secondary">
+              <div className="lg:col-span-2 col-span-5">
                 <h1 className="fall-like-drunk lg:text-2xl text-2xl ">
                   <Link className="hover:underline" to="/">
                     Velkommen til Marius Tanker
@@ -123,10 +125,7 @@ export default function App() {
                   - en koselig side med mye rart
                 </p>
               </div>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-5 items-center">
-              <ul className="flex flex-row gap-2 justify-center [&>li>a]:p-2 [&>li>a]:border-2 [&>li>a]:border-primary hover:[&>li>a]:border-secondary [&>li>a]:cursor-pointer [&>li>a]:rounded-lg hover:[&>li>a]:bg-secondary hover:[&>li>a]:text-primary hover:[&>li>a]:shadow-lg [&>li>a]:transition ">
+              <ul className="col-span-3 lg:col-span-2 items-center hidden lg:flex flex-row gap-2 justify-center [&>li>a]:p-2 [&>li>a]:border-2 [&>li>a]:border-primary hover:[&>li>a]:border-secondary [&>li>a]:cursor-pointer [&>li>a]:rounded-lg hover:[&>li>a]:bg-secondary hover:[&>li>a]:text-primary hover:[&>li>a]:shadow-lg [&>li>a]:transition ">
                 <li>
                   <Link to="/">Hjem</Link>
                 </li>
@@ -137,52 +136,96 @@ export default function App() {
                   <Link to="/author">Forfattere</Link>
                 </li>
               </ul>
-              {!user ? (
-                <Form action="/auth/github" method="post">
-                  <button className="rounded-lg lg:w-[120px] lg:border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
-                    <GitHubLogoIcon />{" "}
-                    <span className="hidden lg:block">Logg inn</span>
-                  </button>
-                </Form>
-              ) : (
-                <>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <button className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
-                        <GitHubLogoIcon /> {(user as any)?.displayName}
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuLabel>
-                        God {dayOfTheWeek} {(user as any)?.name.givenName}
-                      </DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <Link to={"/comments"}>
-                        <DropdownMenuItem className="cursor-pointer">
-                          Kommentarer
-                        </DropdownMenuItem>
-                      </Link>
-                      <DropdownMenuItem>
-                        <Form
-                          className="w-full"
-                          action="/auth/github/logout"
-                          method="post"
-                        >
-                          <button className="w-full text-left">Log out</button>
-                        </Form>
+              <div className="lg:hidden flex col-span-1">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="w-full">
+                    <button className="rounded-lg text-3xl border-secondary hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
+                      <FontAwesomeIcon icon={faHamburger} />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="mx-10 p-10 flex flex-col gap-2 ">
+                    <Link to={"/"}>
+                      <DropdownMenuItem className="cursor-pointer text-2xl underline">
+                        Hjem
                       </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </>
-              )}
-              <ToggleTheme />
-              <SearchInput />
+                    </Link>
+                    <Link to={"/posts"}>
+                      <DropdownMenuItem className="cursor-pointer text-2xl underline">
+                        Artikler
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link to={"/author"}>
+                      <DropdownMenuItem className="cursor-pointer text-2xl underline">
+                        Forfattere
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div className="col-span-6 lg:col-span-2 flex gap-2 justify-center items-center">
+                {!user ? (
+                  <Form action="/auth/github" method="post">
+                    <button className="rounded-lg lg:w-[120px] lg:border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
+                      <div className="text-xl">
+                        <GitHubLogoIcon
+                          className="lg:hidden"
+                          height={32}
+                          width={32}
+                        />
+                        <GitHubLogoIcon
+                          className="hidden lg:block"
+                          height={24}
+                          width={24}
+                        />
+                      </div>
+                      <span className="hidden lg:block">Logg inn</span>
+                    </button>
+                  </Form>
+                ) : (
+                  <div className="flex">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <button className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
+                          <GitHubLogoIcon height={50} width={60} />{" "}
+                          {(user as any)?.displayName}
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel>
+                          God {dayOfTheWeek} {(user as any)?.name.givenName}
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <Link to={"/comments"}>
+                          <DropdownMenuItem className="cursor-pointer">
+                            Kommentarer
+                          </DropdownMenuItem>
+                        </Link>
+                        <DropdownMenuItem>
+                          <Form
+                            className="w-full"
+                            action="/auth/github/logout"
+                            method="post"
+                          >
+                            <button className="w-full text-left">
+                              Log out
+                            </button>
+                          </Form>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                )}
+                <div className="flex flex-row items-center">
+                  <ToggleTheme />
+                  <SearchInput />
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div
-          className="lg:p-10 lg:max-w-[1000px] mt-[200px]   m-auto"
+          className="lg:p-10 lg:max-w-[1000px] mt-[200px] lg:mt-[100px]   m-auto"
           style={{
             backgroundColor: "transparent",
           }}

@@ -10,15 +10,15 @@ body {
 }
 
 .fall-like-drunk:hover {
-  animation: fall-like-drunk-down 2s alternate-reverse infinite;
+  animation: fall-like-drunk-down 1s alternate-reverse infinite;
 }
 
 @keyframes fall-like-drunk-down {
   0% {
-    transform: translate(-20px);
+    transform: translate(-20px) rotateY(20deg);
   }
   100% {
-    transform: translate(0);
+    transform: translate(0) rotateY(0);
   }
 }
 

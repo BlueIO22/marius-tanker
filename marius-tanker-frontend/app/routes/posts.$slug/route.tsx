@@ -2,18 +2,11 @@ import {
   faCalendar,
   faCamera,
   faRobot,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PortableText } from "@portabletext/react";
 import { LoaderFunctionArgs } from "@remix-run/node";
-import {
-  Form,
-  Link,
-  useLoaderData,
-  useNavigation,
-  useSubmit,
-} from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import dayjs from "dayjs";
 import Explanation from "~/lib/explanation/Explanation";
@@ -23,9 +16,9 @@ import { POST_BY_SLUG } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity";
 import { Comment } from "~/types/tanker";
 import { authenticator } from "~/service/auth.server";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
 import type { ActionArgs } from "@remix-run/node";
+import CommentsSection from "~/lib/comments/CommentsSection";
+import getDemoUser from "~/utils/tankerUtil";
 
 export const action = async ({ request }: ActionArgs) => {
   switch (request.method) {
@@ -33,6 +26,7 @@ export const action = async ({ request }: ActionArgs) => {
       const formData = await request.formData();
       const userId = formData.get("userId");
       const postId = formData.get("postId");
+      const reference = formData.get("reference");
       const text = formData.get("text");
 
       if (!userId || !postId || !text) {
@@ -46,6 +40,7 @@ export const action = async ({ request }: ActionArgs) => {
         userId: userId,
         postId: postId,
         created_at: dayjs().toISOString(),
+        ref: reference,
         text: text,
       });
 
@@ -97,18 +92,42 @@ export const action = async ({ request }: ActionArgs) => {
   }
 };
 
+function iterateComment(comment: Comment, comments: Comment[]) {
+  comment.comments = [];
+  const commentsForThisComment = comments.filter(
+    (x) => parseInt(x.ref) === parseInt(comment.id)
+  ) as Comment[];
+
+  if (commentsForThisComment.length === 0) {
+    return comment;
+  }
+
+  for (const commentForThisComment of commentsForThisComment) {
+    const newComment = iterateComment(commentForThisComment, comments);
+    if (newComment) {
+      comment.comments?.push(newComment);
+    }
+  }
+
+  return comment;
+}
+
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const response = await client.fetch(POST_BY_SLUG, {
     slug: params.slug,
   });
+
   const commentsResponse = await supabase
     .from("comments")
     .select("*")
     .eq("postId", params.slug);
 
-  const user = await authenticator.isAuthenticated(request);
+  const user = (await authenticator.isAuthenticated(request)) ?? getDemoUser();
 
-  const comments = commentsResponse?.data?.map((x) => x as Comment) ?? [];
+  const comments =
+    commentsResponse?.data?.map((x) =>
+      iterateComment(x, commentsResponse.data)
+    ) ?? [];
 
   if (!response) {
     return null;
@@ -120,13 +139,11 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 export default function Post() {
   const data = useLoaderData<typeof loader>();
   const action = useLoaderData<typeof action>();
-  const submit = useSubmit();
 
   const post = data?.post;
   const comments: Comment[] = data?.comments ?? [];
-  const user: any = data?.user;
 
-  const [text, setText] = useState("");
+  const user: any = data?.user;
 
   if (!post) {
     return <h1>Fant ikke innlegget</h1>;
@@ -159,7 +176,7 @@ export default function Post() {
     : false;
 
   return (
-    <div className="w-full h-full mt-10 ">
+    <div className="w-full h-full p-5 lg:p-0">
       <div>
         <img
           className="border-2 mb-2 max-h-[500px] w-full object-cover object-center"
@@ -248,83 +265,12 @@ export default function Post() {
             </div>
           </div>
         )}
-
-        <div className="p-2 flex flex-col gap-2">
-          <h2 className="">Kommentarer ({comments.length}):</h2>
-          <div className="mt-5 border-b-2 border-b-secondary mb-5">
-            {comments.map((comment: Comment) => {
-              return (
-                <div
-                  key={comment.id}
-                  className="border-t-2 py-2 border-secondary px-2"
-                >
-                  <p className="font-bold flex justify-between">
-                    <span className="font-normal">@{comment.userId}</span>
-                    <span className="flex gap-2">
-                      {dayjs(comment.created_at).format("DD.MM.YYYY hh:mm")}
-                      {user && comment.userId === user.displayName && (
-                        <Form action={action} method="delete" navigate={false}>
-                          <input type="hidden" name="id" value={comment.id} />
-                          <input
-                            type="hidden"
-                            name="userId"
-                            value={user?.displayName}
-                          />
-                          <button type="submit">
-                            <FontAwesomeIcon icon={faTrash} />
-                          </button>
-                        </Form>
-                      )}
-                    </span>
-                  </p>
-                  <p>{comment.text}</p>
-                </div>
-              );
-            })}
-          </div>
-          {user ? (
-            <div>
-              <h2>Vil du kommentere og mene noe spesielt?</h2>
-              <Form
-                navigate={false}
-                method="post"
-                action={action}
-                onSubmit={(event) => {
-                  submit(event.target as HTMLFormElement);
-
-                  event.preventDefault();
-                  setText("");
-                }}
-                className="flex items-center gap-2 w-full mt-5"
-              >
-                <input type="hidden" name="userId" value={user?.displayName} />
-                <input type="hidden" name="postId" value={post?.slug} />
-                <textarea
-                  onChange={(e) => setText(e.target.value)}
-                  name="text"
-                  value={text}
-                  className="border-2 w-full border-secondary p-2  rounded-lg text-secondary bg-primary h-full"
-                  placeholder="En mening..."
-                />
-                <button
-                  type="submit"
-                  className="bg-secondary text-primary p-2 rounded-lg"
-                >
-                  Send
-                </button>
-              </Form>
-            </div>
-          ) : (
-            <Form
-              method="post"
-              action={`/auth/github?redirectUrl=/posts/${post.slug}`}
-            >
-              <button className="flex underline mt-2 gap-2 items-center">
-                <GitHubLogoIcon /> Logg inn for å kommentere
-              </button>
-            </Form>
-          )}
-        </div>
+        <CommentsSection
+          comments={comments}
+          action={action}
+          post={post}
+          user={user}
+        />
       </div>
     </div>
   );

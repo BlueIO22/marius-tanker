@@ -24,9 +24,8 @@ function calculateBorders(index: number, total: number) {
 
 export default function Home() {
   const data: any = useLoaderData<typeof loader>();
-  console.log(data);
   return (
-    <div className="container">
+    <div>
       <h1 className="inline w-full text-xl font-bold border-b-2 border-white">
         Artikler
       </h1>

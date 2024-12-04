@@ -3,5 +3,7 @@ export type Comment = {
   text: string;
   postId: string;
   userId: string;
+  ref: string;
   created_at: string;
+  comments?: Comment[];
 };

@@ -29,12 +29,12 @@ export default function Index() {
 
   return (
     <div
-      className="mt-5 w-full justify-start "
+      className="mt-5 w-full justify-start p-5 lg:p-0"
       style={{
         backgroundColor: "transparent",
       }}
     >
-      <h1 className="inline w-full text-xl font-bold border-b-2 border-white">
+      <h1 className="inline w-full text-xl font-bold border-b-2 border-white lg:p-10">
         Latest and greatest!
       </h1>
       <ul
