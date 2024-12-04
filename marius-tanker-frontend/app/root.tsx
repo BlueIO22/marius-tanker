@@ -169,8 +169,8 @@ export default function App() {
                       <div className="text-xl">
                         <GitHubLogoIcon
                           className="lg:hidden"
-                          height={32}
-                          width={32}
+                          height={24}
+                          width={24}
                         />
                         <GitHubLogoIcon
                           className="hidden lg:block"
