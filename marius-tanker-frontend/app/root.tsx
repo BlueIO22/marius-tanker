@@ -116,7 +116,7 @@ export default function App() {
           <div className=" w-full flex flex-col lg:flex-row gap-5 justify-center items-center overflow-auto">
             <div className="grid grid-cols-6 pb-2 border-b-secondary">
               <div className="lg:col-span-2 col-span-5">
-                <h1 className="fall-like-drunk lg:text-2xl text-2xl ">
+                <h1 className="lg:text-2xl text-2xl ">
                   <Link className="hover:underline" to="/">
                     Velkommen til Marius Tanker
                   </Link>
