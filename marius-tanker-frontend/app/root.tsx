@@ -166,7 +166,7 @@ export default function App() {
                 {!user ? (
                   <Form action="/auth/github" method="post">
                     <button className="rounded-lg lg:w-[120px] lg:border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
-                      <div className="text-xl">
+                      <div className="text-lg">
                         <GitHubLogoIcon
                           className="lg:hidden"
                           height={24}
@@ -186,7 +186,7 @@ export default function App() {
                     <DropdownMenu>
                       <DropdownMenuTrigger>
                         <button className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
-                          <GitHubLogoIcon height={50} width={60} />{" "}
+                          <GitHubLogoIcon height={24} width={24} />{" "}
                           {(user as any)?.displayName}
                         </button>
                       </DropdownMenuTrigger>
@@ -225,12 +225,11 @@ export default function App() {
         </div>
 
         <div
-          className="lg:p-10 lg:max-w-[1000px] mt-[200px] lg:mt-[100px]   m-auto"
+          className="lg:p-10 p-5 lg:max-w-[1000px] mt-[200px] lg:mt-[100px] m-auto"
           style={{
             backgroundColor: "transparent",
           }}
         >
-          {" "}
           <Outlet />
         </div>
 
