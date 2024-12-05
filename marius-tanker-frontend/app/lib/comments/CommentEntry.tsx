@@ -43,6 +43,7 @@ export default function CommentEntry({
   dayjs.extend(timezone);
 
   const [shouldComment, setShouldComment] = useState(false);
+
   const comments = comment.comments ?? [];
   return (
     <div
@@ -76,28 +77,32 @@ export default function CommentEntry({
               to={"https://github.com/" + comment.userId}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex gap-2 underline"
+              className="flex gap-2 underline group relative"
             >
               <GitHubLogoIcon height={24} width={24} />
-              <span>{comment.userId}</span>
+              <span className="transition-all font-normal group-hover:font-bold">
+                {comment.userId}
+              </span>
             </Link>
             <div className="flex gap-2">
               {dayjs(comment.created_at)
                 .tz("Europe/Oslo")
                 .format("DD.MM.YYYY HH:MM")}
-              {user && comment.userId === user.displayName && (
-                <Form action={action} method="delete" navigate={false}>
-                  <input type="hidden" name="id" value={comment.id} />
-                  <input
-                    type="hidden"
-                    name="userId"
-                    value={user?.displayName}
-                  />
-                  <button type="submit">
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </Form>
-              )}
+              {user &&
+                comment.userId === user.displayName &&
+                comments.length == 0 && (
+                  <Form action={action} method="delete" navigate={false}>
+                    <input type="hidden" name="id" value={comment.id} />
+                    <input
+                      type="hidden"
+                      name="userId"
+                      value={user?.displayName}
+                    />
+                    <button type="submit">
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </Form>
+                )}
             </div>
           </div>
           <p className="my-2 max-w-full break-words">{comment.text}</p>

@@ -76,6 +76,7 @@ export const action = async ({ request }: ActionArgs) => {
         .eq("userId", userId);
 
       if (response.error) {
+        console.log("Error", response.error);
         return new Response("", {
           status: 500,
           statusText: "Internal Server Error",
@@ -124,7 +125,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     .select("*, likes(*)")
     .eq("postId", params.slug);
 
-  const user = await authenticator.isAuthenticated(request);
+  const user = (await authenticator.isAuthenticated(request)) ?? getDemoUser();
 
   const comments =
     commentsResponse?.data?.map((x) =>

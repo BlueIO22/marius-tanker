@@ -20,8 +20,6 @@ export default function LikesContainer({
     return null;
   }
 
-  console.log(comment.likes);
-
   const whoLikesThis =
     likeCount < 3
       ? comment.likes.map((x) => x.userId).join(", ")
@@ -94,7 +92,9 @@ export default function LikesContainer({
         className="underline hover:font-bold transition-all"
       >
         <FontAwesomeIcon className="mr-2" icon={faThumbsUp} />
-        <span className="hidden lg:inline">{whoLikesThis} liker dette</span>
+        <span className="hidden lg:inline">
+          {whoLikesThis} {likeCount > 0 ? "liker dette" : "Lik"}
+        </span>
         <span className="lg:hidden">Lik </span> ({likeCount})
       </button>
     </fetcher.Form>

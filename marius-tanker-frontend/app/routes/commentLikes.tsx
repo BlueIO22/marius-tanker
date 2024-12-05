@@ -17,7 +17,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
 
   switch (request.method) {
     case "PATCH": {
-      console.log("Pathing this baby up", commentId, userId);
       const response = await supabase.from("likes").upsert({
         created_at: dayjs().toISOString(),
         commentId: commentId,
@@ -43,8 +42,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
         console.log("Error", response.error);
         return null;
       }
-
-      console.log("Removed like", commentId, userId);
 
       return new Response("", {
         status: 200,
