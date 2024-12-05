@@ -6,10 +6,7 @@ import { ALL_POSTS } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity";
 
 export async function loader() {
-  console.log("Loading all posts");
   const response = await client.fetch(ALL_POSTS);
-
-  console.log(response);
 
   return {
     posts: response as SanityPost[],

@@ -28,6 +28,7 @@ export const action = async ({ request }: ActionArgs) => {
       const postId = formData.get("postId");
       const reference = formData.get("reference");
       const text = formData.get("text");
+      const root = formData.get("root");
 
       if (!userId || !postId || !text) {
         return new Response("", {
@@ -42,6 +43,7 @@ export const action = async ({ request }: ActionArgs) => {
         created_at: dayjs().toISOString(),
         ref: reference,
         text: text,
+        root: root,
       });
 
       if (response.error) {
@@ -95,7 +97,7 @@ export const action = async ({ request }: ActionArgs) => {
 function iterateComment(comment: Comment, comments: Comment[]) {
   comment.comments = [];
   const commentsForThisComment = comments.filter(
-    (x) => parseInt(x.ref) === parseInt(comment.id)
+    (x) => parseInt(x.root ?? "") === parseInt(comment.id)
   ) as Comment[];
 
   if (commentsForThisComment.length === 0) {
@@ -119,10 +121,10 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
   const commentsResponse = await supabase
     .from("comments")
-    .select("*")
+    .select("*, likes(*)")
     .eq("postId", params.slug);
 
-  const user = (await authenticator.isAuthenticated(request)) ?? getDemoUser();
+  const user = await authenticator.isAuthenticated(request);
 
   const comments =
     commentsResponse?.data?.map((x) =>
@@ -176,7 +178,7 @@ export default function Post() {
     : false;
 
   return (
-    <div className="w-full h-full p-5 lg:p-0">
+    <div className="w-full h-full lg:p-0">
       <div>
         <img
           className="border-2 mb-2 max-h-[500px] w-full object-cover object-center"

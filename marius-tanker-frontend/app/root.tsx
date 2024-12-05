@@ -31,7 +31,7 @@ import {
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee, faHamburger } from "@fortawesome/free-solid-svg-icons";
+import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -39,10 +39,6 @@ export const links: LinksFunction = () => [
     rel: "preconnect",
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap",
   },
   {
     rel: "stylesheet",
@@ -111,7 +107,7 @@ export default function App() {
           style={{
             transition: "all 1s linear",
           }}
-          className="fixed bg-primary z-[20] pt-5 pl-5 pr-5   w-full"
+          className="fixed bg-primary z-[20] pt-5 pl-5 pr-5 w-full"
         >
           <div className=" w-full flex flex-col lg:flex-row gap-5 justify-center items-center overflow-auto">
             <div className="grid grid-cols-6 pb-2 border-b-secondary">

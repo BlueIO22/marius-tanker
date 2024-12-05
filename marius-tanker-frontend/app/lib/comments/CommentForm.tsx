@@ -7,12 +7,14 @@ export default function CommentForm({
   action,
   slug,
   reference,
+  root,
   onSend,
 }: {
   user: any;
   action: any;
   slug: string;
   reference?: string;
+  root?: string;
   onSend?: () => void;
 }) {
   const [text, setText] = useState("");
@@ -46,6 +48,7 @@ export default function CommentForm({
       >
         <input type="hidden" name="userId" value={user?.displayName} />
         <input type="hidden" name="postId" value={slug} />
+        {root && <input type="hidden" name="root" value={root} />}
         {reference && (
           <input type="hidden" name="reference" value={reference} />
         )}
