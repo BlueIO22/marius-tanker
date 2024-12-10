@@ -60,6 +60,33 @@ export default defineType({
       type: 'array',
       of: [
         defineArrayMember({
+          name: 'imageObject',
+          type: 'object',
+          title: 'Bilde',
+          description: 'Bilde i innholdet',
+          fields: [
+            defineField({
+              name: 'imageTitle',
+              title: 'Tekst (under bildet)',
+              type: 'string',
+            }),
+            defineField({
+              name: 'imageCreditLine',
+              type: 'string',
+              description:
+                'Bildekreditering er veldig viktig, hvis bildet er valgt fra unsplash så kommer dette automatisk',
+              title: 'Bildekredittering',
+            }),
+            defineField({
+              name: 'image',
+              type: 'image',
+              title: 'Bilde',
+              description: 'Bilde i innholdet',
+              validation: (v) => v.required(),
+            }),
+          ],
+        }),
+        defineArrayMember({
           type: 'block',
           marks: {
             decorators: [

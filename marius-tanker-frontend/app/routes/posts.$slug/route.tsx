@@ -21,6 +21,7 @@ import CommentsSection from "~/lib/comments/CommentsSection";
 import getDemoUser from "~/utils/tankerUtil";
 import LikeSection from "~/lib/LikeSection";
 import RelatedPosts from "~/lib/RelatedPosts";
+import PostContentImage from "~/lib/PostContentImage";
 
 export const action = async ({ request }: ActionArgs) => {
   switch (request.method) {
@@ -185,6 +186,11 @@ export default function Post() {
       number: ({ children }: { children: any }) => (
         <li className="mt-5"> - {children}</li>
       ),
+    },
+    types: {
+      imageObject: ({ children, value }: { children: any; value: any }) => {
+        return <PostContentImage value={value} />;
+      },
     },
     marks: {
       explanation: ({ children, value }: { children: any; value: any }) => {

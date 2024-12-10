@@ -11,6 +11,15 @@ const TAG_QUERY = `
 
 const POST_QUERY = `
         ...,
+        content[]{
+        ...,
+        "image": image.asset->{
+        ...,
+        "creditLineFromUnsplash": {
+            "url": source.url,
+            "line":  creditLine
+        }},
+        },
         "imageUrl": image.asset->url,
         "slug": slug.current,
         "previewImageUrl": image.asset->url + "?h=600&w=600",
