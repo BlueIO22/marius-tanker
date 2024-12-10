@@ -198,6 +198,13 @@ export default function Post() {
       },
     },
     block: {
+      blockquote: ({ children }: { children: any }) => {
+        return (
+          <blockquote className="mt-10 border-l-4 pl-5 italic">
+            {children}
+          </blockquote>
+        );
+      },
       normal: ({ children }: { children: any }) => {
         return <p className="mt-10 text-lg leading-8">{children}</p>;
       },
