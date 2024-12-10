@@ -30,6 +30,7 @@ export default function CommentEntry({
   comment,
   action,
   postId,
+  postAuthorGithub,
   slug,
   user,
   replyTo,
@@ -37,6 +38,7 @@ export default function CommentEntry({
   comment: Comment;
   action: any;
   postId: string;
+  postAuthorGithub?: string;
   slug: string;
   user: any;
   replyTo?: Comment;
@@ -46,6 +48,8 @@ export default function CommentEntry({
 
   const [shouldComment, setShouldComment] = useState(false);
 
+  const isUserAuthor = postAuthorGithub === comment.userId;
+  console.log(postAuthorGithub, comment.userId, isUserAuthor);
   const comments = comment.comments ?? [];
   return (
     <div
@@ -83,11 +87,18 @@ export default function CommentEntry({
               to={"https://github.com/" + comment.userId}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex gap-2 underline group relative"
+              className="flex gap-2  group relative"
             >
               <GitHubLogoIcon height={24} width={24} />
               <span className="transition-all font-normal group-hover:font-bold">
-                {comment.userId}
+                <span>
+                  <span className="underline">{comment.userId}</span>{" "}
+                  {isUserAuthor ? (
+                    <span className="text-xs"> (Forfatter)</span>
+                  ) : (
+                    ""
+                  )}
+                </span>
               </span>
             </Link>
             <div className="flex gap-2">
@@ -124,6 +135,7 @@ export default function CommentEntry({
                   action={action}
                   reference={comment.id}
                   postId={postId}
+                  slug={slug}
                   user={user}
                   root={comment.root ?? comment.id}
                   onSend={() => setShouldComment(false)}
@@ -162,6 +174,7 @@ export default function CommentEntry({
                     key={x.id}
                     comment={x}
                     action={action}
+                    postAuthorGithub={postAuthorGithub}
                     postId={postId}
                     slug={slug}
                     user={user}

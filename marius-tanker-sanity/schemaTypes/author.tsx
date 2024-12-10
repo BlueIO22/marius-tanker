@@ -44,6 +44,12 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'githubUsername',
+      title: 'GitHub brukernavn',
+      description: 'GitHub brukernavn',
+      type: 'string',
+    }),
+    defineField({
       name: 'description',
       description: 'Beskrivelse av forfatter',
       type: 'array',

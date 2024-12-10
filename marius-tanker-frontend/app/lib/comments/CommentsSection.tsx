@@ -39,6 +39,7 @@ export default function CommentsSection({
                 slug={post.slug}
                 user={user}
                 action={action}
+                postAuthorGithub={post.author?.githubUsername}
                 comment={comment}
               />
             );

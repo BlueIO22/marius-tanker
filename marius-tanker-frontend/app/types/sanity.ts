@@ -12,6 +12,7 @@ export type SanityAuthor = {
   name: string;
   slug: string;
   age?: number;
+  githubUsername?: string;
   imageUrl: string;
   occupation: string;
   description: [];
