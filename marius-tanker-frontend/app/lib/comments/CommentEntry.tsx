@@ -29,12 +29,14 @@ function getSubstringAndDotFromText(text: string) {
 export default function CommentEntry({
   comment,
   action,
+  postId,
   slug,
   user,
   replyTo,
 }: {
   comment: Comment;
   action: any;
+  postId: string;
   slug: string;
   user: any;
   replyTo?: Comment;
@@ -47,23 +49,27 @@ export default function CommentEntry({
   const comments = comment.comments ?? [];
   return (
     <div
+      id={"comment-" + comment.id}
       key={comment.id}
       className={cn(
         "w-full lg:w-full py-2 hover:border-secondary lg:px-2 ",
         comment?.root !== null
-          ? "border-2 hover:border-inherit border-primary hover:shadow-lg my-5 p-5"
+          ? "border-2 hover:border-inherit border-primary hover:shadow-lg my-2 p-5"
           : ""
       )}
     >
       <div>
         {replyTo && (
-          <span className="text-tiny">
+          <Link
+            to={"/posts/" + slug + "#comment-" + replyTo.id}
+            className="text-tiny"
+          >
             <p className="text-tiny opacity-55 w-full break-words">
               {getSubstringAndDotFromText(
                 "@" + replyTo?.userId + " - " + replyTo?.text
               )}
             </p>
-          </span>
+          </Link>
         )}
         <div
           className={cn(
@@ -117,7 +123,7 @@ export default function CommentEntry({
                 <CommentForm
                   action={action}
                   reference={comment.id}
-                  slug={slug}
+                  postId={postId}
                   user={user}
                   root={comment.root ?? comment.id}
                   onSend={() => setShouldComment(false)}
@@ -131,8 +137,7 @@ export default function CommentEntry({
                 variant="link"
                 onClick={() => setShouldComment(true)}
               >
-                <FontAwesomeIcon icon={faMessage} />{" "}
-                <span>Kommenter på dette</span>
+                <FontAwesomeIcon icon={faMessage} />
               </Button>
             )}
           </div>
@@ -157,6 +162,7 @@ export default function CommentEntry({
                     key={x.id}
                     comment={x}
                     action={action}
+                    postId={postId}
                     slug={slug}
                     user={user}
                     replyTo={findReplyToComment(x, comments) ?? replyTo}

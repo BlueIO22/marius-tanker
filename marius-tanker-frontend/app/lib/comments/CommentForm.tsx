@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function CommentForm({
   user,
   action,
+  postId,
   slug,
   reference,
   root,
@@ -12,6 +13,7 @@ export default function CommentForm({
 }: {
   user: any;
   action: any;
+  postId: string;
   slug: string;
   reference?: string;
   root?: string;
@@ -47,7 +49,7 @@ export default function CommentForm({
         className="flex items-center gap-2 w-full mt-2"
       >
         <input type="hidden" name="userId" value={user?.displayName} />
-        <input type="hidden" name="postId" value={slug} />
+        <input type="hidden" name="postId" value={postId} />
         {root && <input type="hidden" name="root" value={root} />}
         {reference && (
           <input type="hidden" name="reference" value={reference} />

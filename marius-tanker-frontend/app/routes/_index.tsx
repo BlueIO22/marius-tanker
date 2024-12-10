@@ -34,7 +34,7 @@ export default function Index() {
         backgroundColor: "transparent",
       }}
     >
-      <h1 className="inline w-full text-xl font-bold border-b-2 border-white lg:p-10">
+      <h1 className="inline w-full text-xl font-bold border-white lg:p-10">
         Latest and greatest!
       </h1>
       <ul

@@ -29,6 +29,7 @@ export type SanityPost = {
   imageUrl: string;
   previewImageUrl: string;
   author?: SanityAuthor;
+  estimatedReadingTime?: number;
   isWrittenByAI?: boolean;
   tags?: SanityTag[];
   creditLineFromUnsplash?: {

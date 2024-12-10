@@ -4,3 +4,17 @@ body {
   font-optical-sizing: auto;
   font-variation-settings: "wdth" 100;
 }
+
+.fly-from-left {
+  animation: fly-from-left 0.5s ease-out;
+}
+
+@keyframes fly-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

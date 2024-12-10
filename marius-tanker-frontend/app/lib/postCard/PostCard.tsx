@@ -5,6 +5,8 @@ import { cn } from "../utils";
 import styles from "./PostCard.module.css";
 import { useState } from "react";
 import dayjs from "dayjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 export default function PostCard({
   post,
@@ -44,11 +46,48 @@ export default function PostCard({
           </div>
         )}
         {isHovering && (
-          <p className="absolute top-2 right-2">@{post.author?.name}</p>
+          <p
+            className={cn(
+              "lg:absolute m-auto right-8 flex gap-2 items-center font-bold",
+              hideExtraInfo ? "top-2 right-4" : "bottom-6"
+            )}
+          >
+            <img
+              className="h-[34px] w-[34px] rounded-full object-cover object-center"
+              src={post.author?.imageUrl}
+              alt={post.author?.name}
+              loading="lazy"
+            />{" "}
+            <span>
+              {post.author?.name}{" "}
+              <span className=" font-normal text-xs block">
+                <FontAwesomeIcon icon={faClock} />{" "}
+                {post.estimatedReadingTime ?? 0}{" "}
+                {(post.estimatedReadingTime ?? 0) > 1 ? "minutters" : "minutt"}{" "}
+                lesing
+              </span>
+            </span>
+          </p>
+        )}
+        {isHovering && (
+          <ul
+            className={cn(
+              "fly-from-left m-auto top-6 left-8 flex gap-2 mb-2 lg:absolute",
+              hideExtraInfo ? "top-2 left-4" : ""
+            )}
+          >
+            {post.tags
+              ?.map((tag) => (
+                <li key={tag._id} className="p-1 italic border-b-1 font-bold">
+                  {tag.title}
+                </li>
+              ))
+              .splice(0, hideExtraInfo ? 2 : 3)}
+          </ul>
         )}
         <div
           className={cn(
-            "lg:w-[350px] lg:h-[200px] p-5",
+            "lg:w-[400px] lg:h-[200px] p-5",
             hideExtraInfo ? "lg:w-full" : ""
           )}
         >
@@ -56,6 +95,7 @@ export default function PostCard({
             className="h-full w-full object-cover object-center"
             src={post.previewImageUrl}
             alt={post.title}
+            loading="lazy"
           />
         </div>
         <div className={cn("flex flex-col gap-2 transition-all")}>

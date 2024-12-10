@@ -1,10 +1,10 @@
-export default function getDemoUser() {
+export default function getDemoUser(displayName: string) {
   if (!(process.env.NODE_ENV === "development")) {
-    return null;
+    return undefined;
   }
 
   return {
-    displayName: "BlueIO22",
+    displayName: displayName,
     name: {
       givenName: "Marius Sørenes",
     },

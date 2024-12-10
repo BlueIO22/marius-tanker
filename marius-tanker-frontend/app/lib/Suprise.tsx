@@ -1,8 +1,8 @@
 import JSConfetti from "js-confetti";
-import { useEffect } from "react";
+import { useMemo } from "react";
 
 export default function Suprise({ counter }: { counter: number }) {
-  useEffect(() => {
+  useMemo(() => {
     const jsConfetti = new JSConfetti();
     if (counter > 29) {
       jsConfetti?.addConfetti({

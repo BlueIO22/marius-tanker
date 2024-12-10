@@ -23,6 +23,7 @@ const POST_QUERY = `
             "url": image.asset->source.url,
             "line":  image.asset->creditLine
         },
+        "estimatedReadingTime": round(length(pt::text(content)) / 5 / 180 ),
         author->{
             ...,
             "slug": slug.current,
@@ -54,6 +55,19 @@ export const POST_BY_SLUG = groq`
     }
 `;
 
+export const RELATED_POSTS_QUERY = groq`
+    *[_type=="post" && _id==$postId] [0] {
+        "postsByTag": *[_type=="post" && count((tags[]._ref)[@ in  ^.tags[]._ref])>0 && _id != ^._id] | order(_createdAt desc) [0..2] {
+            ${POST_QUERY}
+        },
+        "postsByAuthor": *[_type=="post" && author._ref==^.author._ref && _id != ^._id] | order(_createdAt desc) [0..2] {
+            ${POST_QUERY}
+        },
+        "latestPosts": *[_type=="post" && _id != ^._id] | order(_createdAt desc) [0..2] {
+            ${POST_QUERY}
+        },
+ }`;
+
 export const ALL_TAGS = groq`
     *[_type=="tag"] | order(_createdAt desc) {
         ${TAG_QUERY},
@@ -77,7 +91,7 @@ export const SEARCH_QUERY = groq` {
     "tags": *[_type=="tag"]{
         ${TAG_QUERY}
     },
-    "posts": *[_type=="post" && select($search != null => (title match $search + "*" || pt::text(content) match $search + "*" || $search + "*" match author->name), true) && select($tags != null => references(*[_type=="tag" && title in $tags]._id), true)] {
+    "posts": *[_type=="post" && select($search != null => (title match $search + "*" || pt::text(content) match $search + "*" || $search + "*" match author->name), true) && select($tags != null => references(*[_type=="tag" && title in $tags]._id), true)] [0..20] {
             ${POST_QUERY} 
         }
     }

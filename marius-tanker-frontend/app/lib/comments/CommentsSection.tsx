@@ -16,11 +16,16 @@ export default function CommentsSection({
   user: any;
 }) {
   return (
-    <div className="p-2 flex flex-col gap-2">
+    <div className=" flex flex-col gap-2">
       <h2 className="font-bold text-lg">Kommentarer ({comments.length}):</h2>
       <p>Oppfør deg og være snill og grei, krever github innlogging</p>
       <div className="my-5">
-        <CommentForm action={action} slug={post.slug} user={user} />
+        <CommentForm
+          slug={post.slug}
+          action={action}
+          postId={post._id}
+          user={user}
+        />
       </div>
 
       <div className="mt-5">
@@ -30,6 +35,7 @@ export default function CommentsSection({
             return (
               <CommentEntry
                 key={comment.id}
+                postId={post._id}
                 slug={post.slug}
                 user={user}
                 action={action}

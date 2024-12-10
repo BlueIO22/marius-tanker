@@ -1,11 +1,17 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
+import {
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useSearchParams,
+} from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { Input } from "~/components/ui/input";
 import PostCard from "~/lib/postCard/PostCard";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { SEARCH_QUERY } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity";
+import SyncLoader from "react-spinners/SyncLoader";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -33,6 +39,7 @@ export default function SearchPage() {
   const [selectedTags, setSelectedTags] = useState(
     searchParams.get("t") ? searchParams.get("t")?.split(",") ?? [] : []
   );
+  const { state } = useNavigation();
 
   useEffect(() => {
     navigate({
@@ -50,7 +57,7 @@ export default function SearchPage() {
         autoFocus
         value={value}
         onChange={(event) => setValue(event.target.value)}
-        onKeyDown={(event) => {
+        onKeyUp={(event) => {
           if (event.key === "Enter") {
             navigate({
               pathname: "/search",
@@ -84,7 +91,7 @@ export default function SearchPage() {
                   selectedTags?.includes(tag.title)
                     ? "bg-secondary text-primary"
                     : ""
-                } hover:bg-secondary rounded-full hover:text-primary cursor-pointer`}
+                } hover:bg-secondary rounded-lg hover:text-primary cursor-pointer`}
               >
                 {tag.title}
               </div>
@@ -92,7 +99,16 @@ export default function SearchPage() {
           })}
         </div>
       )}
-      {posts?.length > 0 && (
+
+      {state === "loading" && <SyncLoader className="p-10" />}
+
+      {searchParams.get("q") && (
+        <h2 className="ml-2 font-bold mt-5">
+          Viser søkeresultat for {searchParams.get("q")} ({posts.length}){" "}
+        </h2>
+      )}
+
+      {posts?.length > 0 && state != "loading" && (
         <ul className="flex lg:p-10 mt-5 flex-col gap-5">
           {posts.map((post: SanityPost) => {
             return <PostCard post={post} key={post._id} />;
