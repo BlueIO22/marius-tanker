@@ -24,7 +24,6 @@ export default function RelatedPosts({
           return (
             <li key={x._id}>
               <PostCard
-                hideExtraInfo
                 post={x}
                 className={cn(
                   "hover:shadow-lg shadow-none !border-2 !border-inherit dark:hover:!border-secondary"
