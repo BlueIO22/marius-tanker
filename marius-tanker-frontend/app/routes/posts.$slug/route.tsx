@@ -212,14 +212,14 @@ export default function Post() {
     <div className="w-full h-full lg:p-0">
       <div>
         <img
-          className="border-2 mb-2 max-h-[500px] w-full object-cover object-center"
+          className="border-2 mb-2 lg:max-h-[500px] max-h-[250px] w-full object-cover object-center"
           src={post.imageUrl}
           alt={post.title}
         />
       </div>
-      <div className="flex flex-col lg:flex-row justify-between">
+      <div className="flex flex-col lg:flex-row lg:justify-between gap-2 lg:gap-0">
         <>
-          <div className="flex flex-col lg:flex-row gap-5 order-2 lg:order-1">
+          <div className="flex flex-col lg:flex-row lg:gap-5 order-2 gap-2 lg:order-1">
             <p>
               <FontAwesomeIcon className="mr-2" icon={faCalendar} />
               {dayjs(post._createdTime).format("DD.MM.YYYY hh:mm")}
