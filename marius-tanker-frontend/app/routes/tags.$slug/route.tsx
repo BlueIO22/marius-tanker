@@ -34,7 +34,7 @@ export default function TagPage() {
         {(data.tag.parent ? "- " : "") + data.tag.title} ({data.posts.length})
       </h1>
 
-      <ul className="flex lg:p-10 mt-5 flex-col gap-5">
+      <ul className="flex mt-5 flex-col gap-5">
         {data.posts.map((post: SanityPost) => {
           return <PostCard post={post} key={post._id} />;
         })}
