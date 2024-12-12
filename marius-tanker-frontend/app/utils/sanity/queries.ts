@@ -60,8 +60,20 @@ export const LATEST_POSTS = groq`
 
 export const POST_BY_SLUG = groq`
     *[_type=="post" && slug.current==$slug] [0] {
-        ${POST_QUERY}
+        ${POST_QUERY},
+        "relatedPosts": *[_type=="post" && _id==^._id] [0] {
+            "postsByTag": *[_type=="post" && count((tags[]._ref)[@ in  ^.tags[]._ref])>0 && _id != ^._id] | order(_createdAt desc) [0..2] {
+                ${POST_QUERY}
+            },
+            "postsByAuthor": *[_type=="post" && author._ref==^.author._ref && _id != ^._id] | order(_createdAt desc) [0..2] {
+                ${POST_QUERY}
+            },
+            "latestPosts": *[_type=="post" && _id != ^._id] | order(_createdAt desc) [0..2] {
+                ${POST_QUERY}
+            }
+        }
     }
+    
 `;
 
 export const RELATED_POSTS_QUERY = groq`
@@ -97,10 +109,10 @@ export const POSTS_BY_TAG = groq`
 `;
 
 export const SEARCH_QUERY = groq` {
-    "tags": *[_type=="tag"]{
+    "tags": *[_type=="tag" && (isVisible==true || defined(isVisible) == false) && count(*[_type=="post" && references(^._id)])>0][0..9] | order(_createdAt desc) {    
         ${TAG_QUERY}
     },
-    "posts": *[_type=="post" && select($search != null => (title match $search + "*" || pt::text(content) match $search + "*" || $search + "*" match author->name), true) && select($tags != null => references(*[_type=="tag" && title in $tags]._id), true)] [0..20] {
+    "posts": *[_type=="post" && select($search != null => (title match $search + "*" || pt::text(content) match $search + "*" || $search + "*" match author->name || tags[]->title match $search + "*"), true) && select($tags != null => references(*[_type=="tag" && title in $tags]._id), true)] [0..20] {
             ${POST_QUERY} 
         }
     }

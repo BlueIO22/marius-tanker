@@ -14,22 +14,28 @@ export default function RelatedPosts({
 }: {
   relatedPosts: SanityPost[];
 }) {
+  const posts = getRelatedPosts(relatedPosts);
+  if (posts.length == 0) {
+    return null;
+  }
   return (
-    <div className="mt-5">
+    <div className="my-10">
       <h1 className="inline w-full text-xl font-bold border-white">
         Relaterte artikler
       </h1>
-      <ul className="grid lg:grid-cols-1 grid-cols-1 gap-5 mt-5 ">
-        {getRelatedPosts(relatedPosts).map((x, index) => {
+      <p className="text-sm opacity-60">
+        Her er noen artikler som kan være av interesse
+      </p>
+      <ul className="grid grid-cols-1 gap-5 mt-5 ">
+        {posts.map((x) => {
           return (
-            <li key={x._id}>
-              <PostCard
-                post={x}
-                className={cn(
-                  "hover:shadow-lg shadow-none !border-2 !border-inherit dark:hover:!border-secondary"
-                )}
-              />
-            </li>
+            <PostCard
+              key={x._id}
+              post={x}
+              className={cn(
+                "hover:shadow-lg transition-all-[200ms] shadow-none !border-2 !border-inherit dark:hover:!border-secondary"
+              )}
+            />
           );
         })}
       </ul>

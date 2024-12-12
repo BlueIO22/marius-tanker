@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import PostCard from "~/lib/postCard/PostCard";
 import { SanityAuthor, SanityPost } from "~/types/sanity";
 import { AUTHOR_BY_SLUG } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 import { useState } from "react";
 import Suprise from "~/lib/Suprise";
 

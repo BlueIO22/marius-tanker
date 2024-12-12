@@ -3,7 +3,7 @@ import PostCard from "~/lib/postCard/PostCard";
 import { cn } from "~/lib/utils";
 import { SanityPost } from "~/types/sanity";
 import { ALL_POSTS } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 
 export async function loader() {
   const response = await client.fetch(ALL_POSTS);

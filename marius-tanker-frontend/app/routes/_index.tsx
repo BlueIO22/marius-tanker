@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import PostCard from "~/lib/postCard/PostCard";
 import { SanityPost } from "~/types/sanity";
 import { LATEST_POSTS } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export const loader = async () => {

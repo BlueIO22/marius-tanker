@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import PostCard from "~/lib/postCard/PostCard";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { POSTS_BY_TAG } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await client.fetch(POSTS_BY_TAG, {

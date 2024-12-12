@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { SanityAuthor } from "~/types/sanity";
 import { ALL_AUTHORS } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 
 export const loader = async () => {
   const response = await client.fetch(ALL_AUTHORS);

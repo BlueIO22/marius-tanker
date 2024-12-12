@@ -49,7 +49,7 @@ export default function CommentEntry({
   const [shouldComment, setShouldComment] = useState(false);
 
   const isUserAuthor = postAuthorGithub === comment.userId;
-  console.log(postAuthorGithub, comment.userId, isUserAuthor);
+
   const comments = comment.comments ?? [];
   return (
     <div

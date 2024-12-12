@@ -10,7 +10,7 @@ import { Input } from "~/components/ui/input";
 import PostCard from "~/lib/postCard/PostCard";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { SEARCH_QUERY } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 import SyncLoader from "react-spinners/SyncLoader";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -102,9 +102,13 @@ export default function SearchPage() {
 
       {state === "loading" && <SyncLoader className="p-10" />}
 
-      {searchParams.get("q") && (
+      {searchParams.get("q") && state !== "loading" && (
         <h2 className="ml-2 font-bold mt-5">
-          Viser søkeresultat for {searchParams.get("q")} ({posts.length}){" "}
+          {posts.length > 0
+            ? `Viser søkeresultat for ${searchParams.get("q")} (${
+                posts.length
+              }) `
+            : `Fant ingen resultater for ${searchParams.get("q")}`}
         </h2>
       )}
 

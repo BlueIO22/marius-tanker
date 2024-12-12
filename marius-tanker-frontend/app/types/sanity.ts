@@ -37,5 +37,10 @@ export type SanityPost = {
     line?: string;
     url?: string;
   };
+  relatedPosts?: {
+    postsByTag: SanityPost[];
+    postsByAuthor: SanityPost[];
+    latestPosts: SanityPost[];
+  };
   imageCreditLine?: string;
 };

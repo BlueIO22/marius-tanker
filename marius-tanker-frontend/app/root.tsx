@@ -20,6 +20,7 @@ import "./global.css";
 import SearchInput from "./lib/search/SearchInput";
 import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
 import tailwind from "./tailwind.css?url";
+import fontawesomestyles from "@fortawesome/fontawesome-svg-core/styles.css?url";
 import { authenticator } from "./service/auth.server";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import {
@@ -42,7 +43,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "fontawesomestyles.css",
+    href: fontawesomestyles,
   },
   {
     rel: "stylesheet",
@@ -135,9 +136,9 @@ export default function App() {
               <div className="lg:hidden flex col-span-1">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="w-full">
-                    <button className="rounded-lg text-3xl border-secondary hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
+                    <div className="rounded-lg text-3xl border-secondary hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
                       <FontAwesomeIcon icon={faHamburger} />
-                    </button>
+                    </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="mx-10 p-10 flex flex-col gap-2 ">
                     <Link to={"/"}>
@@ -178,10 +179,10 @@ export default function App() {
                         <div className="flex">
                           <DropdownMenu>
                             <DropdownMenuTrigger>
-                              <button className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
+                              <div className="rounded-lg border-2 border-secondary p-2 hover:bg-secondary hover:text-primary transition-all flex items-center gap-2">
                                 <GitHubLogoIcon height={24} width={24} />{" "}
                                 {(user as any)?.displayName}
-                              </button>
+                              </div>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                               <DropdownMenuLabel>
@@ -200,9 +201,9 @@ export default function App() {
                                   action="/auth/github/logout"
                                   method="post"
                                 >
-                                  <button className="w-full text-left">
+                                  <div className="w-full text-left">
                                     Log out
-                                  </button>
+                                  </div>
                                 </Form>
                               </DropdownMenuItem>
                             </DropdownMenuContent>

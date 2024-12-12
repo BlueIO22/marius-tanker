@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { SanityTag } from "~/types/sanity";
 import { ALL_TAGS } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 
 export const loader = async () => {
   const response = await client.fetch(ALL_TAGS);

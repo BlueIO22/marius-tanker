@@ -16,7 +16,7 @@ export default function CommentsSection({
   user: any;
 }) {
   return (
-    <div className=" flex flex-col gap-2">
+    <div className=" flex flex-col gap-2 ">
       <h2 className="font-bold text-lg">Kommentarer ({comments.length}):</h2>
       <p>Oppfør deg og være snill og grei, krever github innlogging</p>
       <div className="my-5">
@@ -28,7 +28,7 @@ export default function CommentsSection({
         />
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 max-h-[800px] overflow-y-auto">
         {comments
           .filter((x) => x.root === null)
           .map((comment: Comment) => {

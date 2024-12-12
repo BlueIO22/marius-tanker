@@ -26,6 +26,11 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'isVisible',
+      title: 'Er synlig',
+      type: 'boolean',
+    }),
+    defineField({
       name: 'parent',
       title: 'Hoved tag',
       type: 'reference',

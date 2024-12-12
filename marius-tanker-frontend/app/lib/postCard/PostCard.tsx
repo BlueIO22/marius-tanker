@@ -23,22 +23,25 @@ export default function PostCard({
   );
 
   return (
-    <Link
-      to={"/posts/" + post.slug}
-      className={cn("z-0 hover:z-10", styles.postCard)}
-      onMouseOver={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-      onTouchMove={() => setIsHovering(true)}
-      onTouchCancel={() => setIsHovering(false)}
-      onFocusCapture={() => setIsHovering(true)}
-      onBlur={() => setIsHovering(false)}
-      tabIndex={0}
+    <li
+      className={cn(
+        styles.postCard,
+        "p-2 w-full fly-in relative hover:border-2 focus:border-secondary focus:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center lg:p-5 pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
+        className
+      )}
     >
-      <li
+      <Link
+        to={"/posts/" + post.slug}
         className={cn(
-          "grid p-2 lg:grid-cols-2 relative hover:border-2 focus:border-secondary focus:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center lg:p-5 pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
-          className
+          "z-0 grid items-center hover:z-10 lg:grid-cols-2 grid-cols-1 w-full"
         )}
+        onMouseOver={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        onTouchMove={() => setIsHovering(true)}
+        onTouchCancel={() => setIsHovering(false)}
+        onFocusCapture={() => setIsHovering(true)}
+        onBlur={() => setIsHovering(false)}
+        tabIndex={0}
       >
         {isNewArticle && hideExtraInfo && (
           <div className="p-2 group-hover:hidden absolute top-2 lg:dark:bg-transparent lg:dark:border-dashed border-2 text-primary lg:dark:text-secondary left-2 bg-secondary w-fit shadow-lg rounded-lg">
@@ -57,7 +60,7 @@ export default function PostCard({
               src={post.author?.imageUrl}
               alt={post.author?.name}
               loading="lazy"
-            />{" "}
+            />
             <span>
               {post.author?.name}{" "}
               <span className=" font-normal text-xs block">
@@ -92,7 +95,7 @@ export default function PostCard({
           )}
         >
           <img
-            className="h-full w-full object-cover object-center"
+            className="lg:h-full w-full h-[100px] object-cover object-center"
             src={post.previewImageUrl}
             alt={post.title}
             loading="lazy"
@@ -111,7 +114,7 @@ export default function PostCard({
             </div>
           )}
         </div>
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 }

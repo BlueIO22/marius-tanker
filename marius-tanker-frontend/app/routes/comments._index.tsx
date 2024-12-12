@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import groq from "groq";
 import { authenticator } from "~/service/auth.server";
 import { supabase } from "~/service/supabase.server";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user: any = await authenticator.isAuthenticated(request, {

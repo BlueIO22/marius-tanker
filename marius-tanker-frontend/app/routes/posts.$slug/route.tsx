@@ -5,23 +5,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PortableText } from "@portabletext/react";
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { json, LoaderFunctionArgs } from "@remix-run/node";
+import { Await, Link, useLoaderData } from "@remix-run/react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import dayjs from "dayjs";
 import Explanation from "~/lib/explanation/Explanation";
 import { supabase } from "~/service/supabase.server";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { POST_BY_SLUG, RELATED_POSTS_QUERY } from "~/utils/sanity/queries";
-import { client } from "~/utils/sanity/sanity";
+import { client } from "~/utils/sanity/sanity.server";
 import { Comment, Like } from "~/types/tanker";
 import { authenticator } from "~/service/auth.server";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionArgs, LoaderFunction } from "@remix-run/node";
 import CommentsSection from "~/lib/comments/CommentsSection";
 import getDemoUser from "~/utils/tankerUtil";
 import LikeSection from "~/lib/LikeSection";
 import RelatedPosts from "~/lib/RelatedPosts";
 import PostContentImage from "~/lib/PostContentImage";
+import { Suspense } from "react";
 
 export const action = async ({ request }: ActionArgs) => {
   switch (request.method) {
@@ -79,7 +80,6 @@ export const action = async ({ request }: ActionArgs) => {
         .eq("userId", userId);
 
       if (response.error) {
-        console.log("Error", response.error);
         return new Response("", {
           status: 500,
           statusText: "Internal Server Error",
@@ -118,7 +118,7 @@ function iterateComment(comment: Comment, comments: Comment[]) {
   return comment;
 }
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const response = await client.fetch(POST_BY_SLUG, {
     slug: params.slug,
   });
@@ -130,16 +130,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     .from("comments")
     .select("*, likes(*)")
     .eq("postId", response?._id);
-
-  const relatedPosts = await client.fetch(RELATED_POSTS_QUERY, {
-    postId: response?._id ?? "",
-  });
-
-  const relatedPostsData = [
-    ...relatedPosts.postsByTag.map((x) => x as SanityPost),
-    ...relatedPosts.postsByAuthor.map((x) => x as SanityPost),
-    ...relatedPosts.latestPosts.map((x) => x as SanityPost),
-  ];
 
   const postLikes = await supabase
     .from("likes")
@@ -155,18 +145,13 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
       iterateComment(x, commentsResponse.data)
     ) ?? [];
 
-  if (!response) {
-    return null;
-  }
-
   return {
     post: response as SanityPost,
     postLikes: postLikes.data?.map((x) => x as Like) ?? [],
-    relatedPosts: relatedPostsData,
     comments: comments,
     user,
   };
-};
+}
 
 export default function Post() {
   const data = useLoaderData<typeof loader>();
@@ -174,7 +159,6 @@ export default function Post() {
 
   const post = data?.post;
   const comments: Comment[] = data?.comments ?? [];
-
   const user: any = data?.user;
 
   if (!post) {
@@ -219,8 +203,11 @@ export default function Post() {
     ? post.creditLineFromUnsplash?.line && post.creditLineFromUnsplash?.url
     : false;
 
-  const relatedPosts = data.relatedPosts;
-
+  const relatedPosts = [
+    ...(data.post?.relatedPosts?.postsByTag ?? []),
+    ...(data.post?.relatedPosts?.postsByAuthor ?? []),
+    ...(data.post?.relatedPosts?.latestPosts ?? []),
+  ];
   return (
     <div className="w-full h-full lg:p-0">
       <div>
