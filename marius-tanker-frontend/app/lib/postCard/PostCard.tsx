@@ -26,7 +26,7 @@ export default function PostCard({
     <li
       className={cn(
         styles.postCard,
-        "p-2 w-full fly-in relative hover:border-2 focus:border-secondary focus:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center lg:p-5 pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
+        "p-5 w-full fly-in relative hover:border-2 focus:border-secondary focus:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
         className
       )}
     >
@@ -101,7 +101,7 @@ export default function PostCard({
             loading="lazy"
           />
         </div>
-        <div className={cn("flex flex-col gap-2 transition-all")}>
+        <div className={cn("flex flex-col gap-2 mx-5 lg:mx-0 transition-all")}>
           <h2 className="text-xl font-bold">{post.title}</h2>
           <p className="text-xl">{post.subtitle}</p>
           {isHovering && !hideExtraInfo && (
