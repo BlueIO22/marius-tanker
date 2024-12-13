@@ -42,11 +42,11 @@ export const links: LinksFunction = () => [
     crossOrigin: "anonymous",
   },
   {
-    rel: "stylesheet",
+    rel: "preload stylesheet",
     href: fontawesomestyles,
   },
   {
-    rel: "stylesheet",
+    rel: "preload stylesheet",
     href: tailwind,
   },
 ];
