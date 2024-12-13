@@ -76,6 +76,22 @@ export const POST_BY_SLUG = groq`
     
 `;
 
+export const FRONTPAGE_QUERY = groq`
+    *[_type=="frontpage"][0] {
+        blocks[]->{
+            ...,
+            ${POST_QUERY},
+            
+            "authorPosts": *[_type=="post" && references(^._id)] | order(_createdAt desc) [0..2] {
+                ${POST_QUERY}
+            },
+            posts[]->{
+                ${POST_QUERY},
+            }
+        }
+    }
+`;
+
 export const RELATED_POSTS_QUERY = groq`
     *[_type=="post" && _id==$postId] [0] {
         "postsByTag": *[_type=="post" && count((tags[]._ref)[@ in  ^.tags[]._ref])>0 && _id != ^._id] | order(_createdAt desc) [0..2] {

@@ -10,6 +10,7 @@ export type SanityTag = {
 export type SanityAuthor = {
   _id: string;
   name: string;
+  _type: string;
   slug: string;
   age?: number;
   githubUsername?: string;
@@ -22,6 +23,7 @@ export type SanityAuthor = {
 export type SanityPost = {
   _id: string;
   slug: string;
+  _type: string;
   title: string;
   subtitle: string;
   excerpt: string;
@@ -44,3 +46,18 @@ export type SanityPost = {
   };
   imageCreditLine?: string;
 };
+
+export type SanityGrid = {
+  title: string;
+  _type: string;
+  _id: string;
+  columns: number;
+  rows: number;
+  posts: SanityPost[];
+};
+
+export type SanityBlockObject =
+  | SanityPost
+  | SanityGrid
+  | SanityAuthor
+  | SanityTag;

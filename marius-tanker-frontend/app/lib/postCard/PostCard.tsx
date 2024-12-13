@@ -12,9 +12,15 @@ export default function PostCard({
   post,
   className,
   hideExtraInfo,
+  hideAnimationOnHover,
+  linkClassName,
+  imageClassName,
 }: {
   post: SanityPost;
   className?: string;
+  hideAnimationOnHover?: boolean;
+  imageClassName?: string;
+  linkClassName?: string;
   hideExtraInfo?: boolean;
 }) {
   const [isHovering, setIsHovering] = useState(false);
@@ -25,15 +31,16 @@ export default function PostCard({
   return (
     <li
       className={cn(
-        styles.postCard,
-        "p-5 w-full fly-in relative hover:border-2 focus:border-secondary focus:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
+        hideAnimationOnHover ? "" : styles.postCard,
+        "p-5 w-full fly-in list-none relative hover:border-2 focus:border-secondary focus:border-2 hover:border-secondary hover:py-10 group transition-all lg:flex-row flex-col lg:items-center pb-5 gap-5 dark:border-2 dark:border-secondary shadow-lg bg-primary text-secondary cursor-pointer",
         className
       )}
     >
       <Link
         to={"/posts/" + post.slug}
         className={cn(
-          "z-0 grid items-center hover:z-10 lg:grid-cols-2 grid-cols-1 w-full"
+          "z-0 grid items-center hover:z-10 lg:grid-cols-2 grid-cols-1 w-full",
+          linkClassName
         )}
         onMouseOver={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -95,13 +102,16 @@ export default function PostCard({
           )}
         >
           <img
-            className="lg:h-full w-full h-[100px] object-cover object-center"
+            className={cn(
+              "lg:h-full w-full h-[100px] object-cover object-center",
+              imageClassName
+            )}
             src={post.previewImageUrl}
             alt={post.title}
             loading="lazy"
           />
         </div>
-        <div className={cn("flex flex-col gap-2 mx-5 lg:mx-0 transition-all")}>
+        <div className={cn("flex flex-col gap-2 mx-5 transition-all")}>
           <h2 className="text-xl font-bold">{post.title}</h2>
           <p className="text-xl">{post.subtitle}</p>
           {isHovering && !hideExtraInfo && (

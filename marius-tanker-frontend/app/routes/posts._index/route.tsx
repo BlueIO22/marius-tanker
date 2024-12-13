@@ -35,7 +35,7 @@ export default function Home() {
                 hideExtraInfo
                 post={x}
                 className={cn(
-                  "!grid-cols-1 lg:h-[400px] shadow-none hover:border-4 hover:!border-inherit ",
+                  "!grid-cols-1  shadow-none hover:border-4 hover:!border-inherit ",
                   calculateBorders(index, total)
                 )}
               />
