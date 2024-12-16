@@ -5,6 +5,7 @@ import {
   SanityPost,
 } from "~/types/sanity";
 import PostCard from "./postCard/PostCard";
+import AuthorPreviewPosts from "./AuthorPreviewPosts.client";
 
 export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
   return blocks.map((block: SanityBlockObject) => {
@@ -46,7 +47,6 @@ export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
         const authorPosts = (block as any).authorPosts;
         const author = block as SanityAuthor;
 
-        console.log(authorPosts);
         return (
           <div className="relative">
             <img
@@ -61,19 +61,8 @@ export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
                 {author.name} har skrevet {authorPosts.length} artikler
               </p>
             </div>
-            <div className="absolute p-20 -bottom-10 w-full overflow-x-scroll bg-transparent">
-              <div className="flex flex-row w-full overflow-x-scroll">
-                {authorPosts?.map((post) => (
-                  <PostCard
-                    key={post._id + "authorposts"}
-                    hideExtraInfo
-                    hideAnimationOnHover
-                    className="shadow-none hover:bg-primary hover:text-secondary !p-10 min-w-[600px] bg-transparent text-white !hover:py-0 !max-h-[350px] !border-inherit"
-                    linkClassName="grid !grid-cols-1"
-                    post={post}
-                  />
-                ))}
-              </div>
+            <div className="absolute p-20 -bottom-10 w-full  bg-transparent">
+              <AuthorPreviewPosts authorPosts={authorPosts} />
             </div>
           </div>
         );

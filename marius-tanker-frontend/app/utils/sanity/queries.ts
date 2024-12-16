@@ -82,7 +82,7 @@ export const FRONTPAGE_QUERY = groq`
             ...,
             ${POST_QUERY},
             
-            "authorPosts": *[_type=="post" && references(^._id)] | order(_createdAt desc) [0..2] {
+            "authorPosts": *[_type=="post" && references(^._id)] | order(_createdAt desc) [0..5] {
                 ${POST_QUERY}
             },
             posts[]->{
