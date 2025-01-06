@@ -15,17 +15,17 @@ export default function AuthorsPage() {
   const authors = useLoaderData<typeof loader>();
 
   return (
-    <div className="mt-10">
-      <h1 className="inline w-full text-xl font-bold border-b-2 border-white">
+    <div>
+      <h1 className="inline w-full ml-5 mb-2 text-xl font-bold border-white">
         Forfattere
       </h1>
-      <ul className="mt-2">
+      <ul className="mt-2 ml-5">
         {authors.map((author) => {
           return (
             <Link
               key={author._id}
               to={"/author/" + author.slug}
-              className="flex mb-5 lg:w-[400px] border-2 cursor-pointer p-2  hover:bg-secondary hover:text-primary flex-row gap-2 items-center rounded-lg"
+              className="flex mb-2 lg:w-[400px] cursor-pointer p-2 hover:underline flex-row gap-2 items-center rounded-lg"
             >
               <img
                 className="h-[64px] rounded-full"

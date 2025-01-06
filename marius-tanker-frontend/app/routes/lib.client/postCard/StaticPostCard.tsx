@@ -2,8 +2,15 @@ import { Link } from "@remix-run/react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { SanityPost } from "~/types/sanity";
+import { cn } from "../utils";
 
-export default function StaticPostCard({ post }: { post: SanityPost }) {
+export default function StaticPostCard({
+  post,
+  className,
+}: {
+  post: SanityPost;
+  className?: string;
+}) {
   const [isHovering, setIsHovering] = useState(false);
   return (
     <Link
@@ -13,10 +20,13 @@ export default function StaticPostCard({ post }: { post: SanityPost }) {
       }}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className="flex relative hover:shadow-xl cursor-pointer flex-col hover:bg-white hover:text-black"
+      className={cn(
+        "flex relative hover:shadow-xl cursor-pointer flex-col hover:bg-white hover:text-black",
+        className
+      )}
     >
       <img
-        className="h-[200px] lg:h-[300px] mb-2 object-cover object-center"
+        className="h-[200px] w-full lg:h-[300px] mb-2 object-cover object-center"
         src={post.imageUrl}
         alt=""
       />

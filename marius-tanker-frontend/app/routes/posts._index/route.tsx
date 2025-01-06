@@ -24,10 +24,8 @@ export default function Home() {
   const data: any = useLoaderData<typeof loader>();
   return (
     <div className="mt-[150px] mx-5">
-      <h1 className="inline w-full text-xl font-bold border-b-2  border-white">
-        Artikler
-      </h1>
-      <ul className="grid lg:grid-cols-2 grid-cols-1 gap-5 mt-5 border-t-2 pt-5">
+      <h1 className="inline w-full text-xl font-bold border-white">Artikler</h1>
+      <ul className="grid lg:grid-cols-2 grid-cols-1 gap-5 mt-5 pt-5">
         {data?.posts.map((x, index) => {
           const total = data.posts.length;
           return (

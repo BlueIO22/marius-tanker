@@ -123,6 +123,8 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     slug: params.slug,
   });
 
+  const isCommentsEnabled = process.env.IS_COMMENTS_ENABLED === "true";
+
   const url = new URL(request.url);
   const testUser = url.searchParams.get("testUser");
 
@@ -150,6 +152,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     postLikes: postLikes.data?.map((x) => x as Like) ?? [],
     comments: comments,
     user,
+    isCommentsEnabled,
   };
 }
 
@@ -299,12 +302,14 @@ export default function Post() {
             </div>
           </div>
         )}
-        <CommentsSection
-          comments={comments}
-          action={action}
-          post={post}
-          user={user}
-        />
+        {data.isCommentsEnabled && (
+          <CommentsSection
+            comments={comments}
+            action={action}
+            post={post}
+            user={user}
+          />
+        )}
         <RelatedPosts relatedPosts={relatedPosts} />
       </div>
     </div>

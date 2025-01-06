@@ -39,14 +39,14 @@ export default function Index() {
         backgroundColor: "transparent",
       }}
     >
-      <h1 className="inline w-full text-xl font-bold border-white lg:p-10">
+      <h1 className="inline w-full ml-5 lg:ml-0 text-xl font-bold border-white lg:p-10">
         Latest and greatest!
       </h1>
       <ul
         style={{
           backgroundColor: "transparent",
         }}
-        className="flex lg:p-10 mt-5 flex-col gap-5 backdrop-opacity-0 "
+        className="flex lg:p-10 m-5  flex-col gap-5 backdrop-opacity-0 "
       >
         {data.posts.map((post: SanityPost) => {
           return <StaticPostCard post={post} key={post._id} />;

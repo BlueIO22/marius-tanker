@@ -33,7 +33,7 @@ export default function Author() {
   return (
     <>
       <Suprise counter={counter} />
-      <div className="mt-10 p-5 lg:p-5 flex flex-col lg:flex-row gap-10">
+      <div className="p-5 lg:p-5 flex flex-col lg:flex-row gap-10">
         <img
           onClick={() => {
             setCounter(counter + 1);
@@ -51,10 +51,16 @@ export default function Author() {
         </div>
       </div>
       <div className="flex flex-col items-center mt-10">
-        <h2 className="text-xl font-bold">Innlegg skrevet av Marius:</h2>
-        <ul className="flex lg:p-10 mt-5 flex-col gap-5">
+        <h2 className="text-xl font-bold">Innlegg skrevet av {author.name}:</h2>
+        <ul className="flex lg:p-10 mt-5 flex-col gap-5 ">
           {author.posts?.map((post: SanityPost) => {
-            return <StaticPostCard post={post} key={post._id} />;
+            return (
+              <StaticPostCard
+                className="lg:w-[900px]"
+                post={post}
+                key={post._id}
+              />
+            );
           })}
         </ul>
       </div>
