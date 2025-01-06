@@ -12,6 +12,7 @@ import { SanityPost, SanityTag } from "~/types/sanity";
 import { SEARCH_QUERY } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";
 import SyncLoader from "react-spinners/SyncLoader";
+import StaticPostCard from "./lib.client/postCard/StaticPostCard";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -52,9 +53,9 @@ export default function SearchPage() {
   }, [selectedTags]);
 
   return (
-    <div className="mt-10">
+    <div className="mt-[150px]">
       <Input
-        autoFocus
+        ﬁ
         value={value}
         onChange={(event) => setValue(event.target.value)}
         onKeyUp={(event) => {
@@ -115,7 +116,7 @@ export default function SearchPage() {
       {posts?.length > 0 && state != "loading" && (
         <ul className="flex lg:p-10 mt-5 flex-col gap-5">
           {posts.map((post: SanityPost) => {
-            return <PostCard post={post} key={post._id} />;
+            return <StaticPostCard post={post} key={post._id} />;
           })}
         </ul>
       )}

@@ -217,7 +217,7 @@ export default function Post() {
           alt={post.title}
         />
       </div>
-      <div className="flex flex-col lg:flex-row lg:justify-between gap-2 lg:gap-0">
+      <div className="flex pl-2 lg:pl-0 flex-col lg:flex-row lg:justify-between gap-2 lg:gap-0">
         <>
           <div className="flex flex-col lg:flex-row lg:gap-5 order-2 gap-2 lg:order-1">
             <p>
@@ -250,7 +250,7 @@ export default function Post() {
           )}
         </>
       </div>
-      <div className="mt-10">
+      <div className="mt-10 px-2 lg:pl-0">
         <h1 className="text-3xl">{post.title}</h1>
         <p className="text-xl mt-2"> - {post.subtitle}</p>
         <div className="mt-2">

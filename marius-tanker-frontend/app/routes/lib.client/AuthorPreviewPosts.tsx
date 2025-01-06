@@ -40,7 +40,7 @@ export default function AuthorPreviewPosts({
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}
-          className="relative rounded-lg z-50 shadow-xl min-w-[400px] h-[200px] lg:min-w-[500px]"
+          className="relative rounded-lg z-50 shadow-xl min-w-[300px] h-[200px] lg:min-w-[500px]"
         >
           <motion.div
             initial={{ y: -100 }}

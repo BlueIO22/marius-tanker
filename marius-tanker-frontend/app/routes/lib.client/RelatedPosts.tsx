@@ -1,6 +1,7 @@
 import { SanityPost } from "~/types/sanity";
 import PostCard from "./postCard/PostCard";
 import { cn } from "./utils";
+import StaticPostCard from "./postCard/StaticPostCard";
 
 function getRelatedPosts(relatedPostsData: SanityPost[]) {
   if (relatedPostsData.length < 3) {
@@ -28,15 +29,7 @@ export default function RelatedPosts({
       </p>
       <ul className="grid grid-cols-1 gap-5 mt-5 ">
         {posts.map((x) => {
-          return (
-            <PostCard
-              key={x._id}
-              post={x}
-              className={cn(
-                "hover:shadow-lg transition-all-[200ms] shadow-none !border-2 !border-inherit dark:hover:!border-secondary"
-              )}
-            />
-          );
+          return <StaticPostCard key={x._id} post={x} />;
         })}
       </ul>
     </div>

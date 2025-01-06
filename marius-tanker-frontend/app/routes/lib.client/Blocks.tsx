@@ -58,7 +58,7 @@ export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
                 src={author.imageUrl}
                 alt={author.name + " image"}
               />
-              <div className="absolute lg:top-20 lg:max-h-[100px] lg:left-20 left-5 bottom-5 bg-white shadow-lg rounded-lg p-2 lg:p-5">
+              <div className="absolute lg:top-20 lg:max-h-[100px] lg:left-20 left-5 bottom-5  bg-white text-black shadow-lg rounded-lg p-2 lg:p-5">
                 <h2>{author.name}</h2>
                 <p className="italic text-xs">{author.occupation}</p>
                 <p className=" hidden lg:inline text-xs mt-2">
@@ -70,7 +70,7 @@ export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
               </div>
             </div>
 
-            <div className="border-b-2 p-5 lg:hidden lg:p-20 -bottom-10 w-full">
+            <div className="border-b-2 p-5 lg:hidden lg:p-20  text-black -bottom-10 w-full">
               <p className="font-bold">
                 {author.name} har skrevet {authorPosts.length} artikler
               </p>
