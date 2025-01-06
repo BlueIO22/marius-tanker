@@ -40,18 +40,18 @@ export default function AuthorPreviewPosts({
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}
-          className="relative rounded-lg z-50 shadow-xl min-w-[300px] h-[200px] lg:min-w-[500px]"
+          className="relative rounded-lg z-50 shadow-xl min-w-[300px] h-[200px] lg:h-[300px] lg:w-[800px] lg:min-w-[500px]"
         >
           <motion.div
             initial={{ y: -100 }}
             whileInView={{ y: 0 }}
-            className="absolute top-5 left-5 bg-white p-2 rounded-lg"
+            className="absolute top-5 left-5 text-black bg-white p-2 rounded-lg"
           >
             <h3 className="font-bold">{post.title}</h3>
             <p className="italic text-md mb-4">{post.subtitle}</p>
             <div className="flex justify-end">
               <Link
-                className=" border-b-2 hover:border-2 hover:p-1 transition-all border-dashed border-secondary text-right"
+                className=" border-b-2 hover:border-2 hover:p-1 transition-all border-dashed border-secondary dark:border-primary text-right"
                 to={`/posts/${post.slug}`}
               >
                 Les mer

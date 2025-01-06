@@ -13,7 +13,7 @@ export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
     switch (block._type) {
       case "grid":
         return (
-          <div className="pt-5 shadow-none my-10 ">
+          <div className="pt-5 m-auto lg:my-10 lg:w-[1000px] w-full shadow-none">
             <h2 className="ml-5 lg:ml-0 text-2xl font-bold my-5">
               {(block as SanityGrid).title}
             </h2>
@@ -35,12 +35,15 @@ export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
         return (
           <>
             <div
-              className="lg:hidden my-5 lg:my-inherit border-2"
+              className="lg:hidden my-5  lg:my-inherit border-2"
               key={block._id}
             >
               <PostCard overrideHovering post={block as SanityPost} />
             </div>
-            <div className="hidden lg:block my-10" key={block._id}>
+            <div
+              className="hidden lg:w-[1000px] w-full lg:block m-auto my-10"
+              key={block._id}
+            >
               <PostCard post={block as SanityPost} />
             </div>
           </>
@@ -54,7 +57,7 @@ export default function Blocks({ blocks }: { blocks: SanityBlockObject[] }) {
           <>
             <div className="relative">
               <img
-                className="brightness-60 object-cover object-center"
+                className="brightness-60 object-cover max-h-[1000px] w-full object-center"
                 src={author.imageUrl}
                 alt={author.name + " image"}
               />

@@ -124,6 +124,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   });
 
   const isCommentsEnabled = process.env.IS_COMMENTS_ENABLED === "true";
+  console.log(process.env.IS_COMMENTS_ENABLED);
 
   const url = new URL(request.url);
   const testUser = url.searchParams.get("testUser");
@@ -212,105 +213,109 @@ export default function Post() {
     ...(data.post?.relatedPosts?.latestPosts ?? []),
   ];
   return (
-    <div className="w-full h-full lg:p-0">
-      <div>
+    <div className="w-full h-full lg:p-0 ">
+      <div className="mb-5 relative z-10">
+        <div className="absolute -translate-y-1/2 left-1/2 -translate-x-1/2 -bottom-[150px] p-10 flex flex-col items-center justify-center w-[600px] bg-white text-black ">
+          <h1 className="text-3xl">{post.title}</h1>
+          <p className="text-xl mt-2"> - {post.subtitle}</p>
+          <div className="flex mt-5  pl-2 lg:pl-0 flex-col lg:flex-row lg:justify-between gap-5 lg:gap-10 ">
+            <>
+              <div className="flex flex-col lg:flex-row lg:gap-5 order-2 gap-2 lg:order-1">
+                <p>
+                  <FontAwesomeIcon className="mr-2" icon={faCalendar} />
+                  {dayjs(post._createdTime).format("DD.MM.YYYY hh:mm")}
+                </p>
+                {post.isWrittenByAI && (
+                  <p className="flex items-center">
+                    <FontAwesomeIcon className="mr-2" icon={faRobot} />
+                    <span>Denne artikkelen har innhold generert av KI</span>
+                  </p>
+                )}
+              </div>
+              {hasImageCrediting && (
+                <div className="flex flex-row order-1 lg:order-2 items-center">
+                  <FontAwesomeIcon icon={faCamera} className="mr-2 " />
+                  {isUnsplash ? (
+                    <Link
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:underline"
+                      to={post.creditLineFromUnsplash?.url ?? ""}
+                    >
+                      {post.creditLineFromUnsplash?.line}
+                    </Link>
+                  ) : (
+                    <p>{post.imageCreditLine}</p>
+                  )}
+                </div>
+              )}
+            </>
+          </div>
+        </div>
         <img
-          className="border-2 mb-2 lg:max-h-[500px] max-h-[250px] w-full object-cover object-center"
+          className="border-2 lg:max-h-[600px] max-h-[250px] w-full object-cover object-center"
           src={post.imageUrl}
           alt={post.title}
         />
       </div>
-      <div className="flex pl-2 lg:pl-0 flex-col lg:flex-row lg:justify-between gap-2 lg:gap-0">
-        <>
-          <div className="flex flex-col lg:flex-row lg:gap-5 order-2 gap-2 lg:order-1">
-            <p>
-              <FontAwesomeIcon className="mr-2" icon={faCalendar} />
-              {dayjs(post._createdTime).format("DD.MM.YYYY hh:mm")}
-            </p>
-            {post.isWrittenByAI && (
-              <p className="flex items-center">
-                <FontAwesomeIcon className="mr-2" icon={faRobot} />
-                <span>Denne artikkelen har innhold generert av KI</span>
-              </p>
+      <div className="lg:max-w-[1000px] m-auto mt-10">
+        <div className="mt-10 px-2 lg:pl-0">
+          <div className="mt-2">
+            {post.author && (
+              <Link
+                to={"/author/" + post.author.slug}
+                className="flex mb-5 w-[180px] cursor-pointer p-2 rounded-lg hover:underline flex-row gap-2 items-center"
+              >
+                <img
+                  className="h-[32px] rounded-full"
+                  src={post.author.imageUrl}
+                  alt={post.author + " bilde"}
+                />
+                <div>
+                  <p>{post.author.name}</p>
+                  <p className="text-xs">{post.author.occupation}</p>
+                </div>
+              </Link>
             )}
           </div>
-          {hasImageCrediting && (
-            <div className="flex flex-row order-1 lg:order-2 items-center">
-              <FontAwesomeIcon icon={faCamera} className="mr-2 " />
-              {isUnsplash ? (
-                <Link
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:underline"
-                  to={post.creditLineFromUnsplash?.url ?? ""}
-                >
-                  {post.creditLineFromUnsplash?.line}
-                </Link>
-              ) : (
-                <p>{post.imageCreditLine}</p>
-              )}
-            </div>
-          )}
-        </>
-      </div>
-      <div className="mt-10 px-2 lg:pl-0">
-        <h1 className="text-3xl">{post.title}</h1>
-        <p className="text-xl mt-2"> - {post.subtitle}</p>
-        <div className="mt-2">
-          {post.author && (
-            <Link
-              to={"/author/" + post.author.slug}
-              className="flex mb-5 w-[180px] cursor-pointer p-2 rounded-lg hover:underline flex-row gap-2 items-center"
-            >
-              <img
-                className="h-[32px] rounded-full"
-                src={post.author.imageUrl}
-                alt={post.author + " bilde"}
-              />
-              <div>
-                <p>{post.author.name}</p>
-                <p className="text-xs">{post.author.occupation}</p>
-              </div>
-            </Link>
-          )}
-        </div>
-        <div className="mt-5">
-          <PortableText
-            components={postContentComponents}
-            value={post.content}
-          />
-        </div>
-        <LikeSection likes={data.postLikes} postId={post._id} user={user} />
-        {post.tags && (
-          <div className="mt-10 flex flex-col gap-5 mb-10">
-            <p>Tags:</p>
-            <div>
-              {post.tags.map((tag: SanityTag) => {
-                return (
-                  <Link
-                    key={tag._id}
-                    style={{
-                      transition: "all 1s linear",
-                    }}
-                    className="border-2 cursor-pointer hover:border-dashed p-2 mr-5"
-                    to={"/tags/" + tag.slug}
-                  >
-                    {tag.title}
-                  </Link>
-                );
-              })}
-            </div>
+          <div className="mt-5">
+            <PortableText
+              components={postContentComponents}
+              value={post.content}
+            />
           </div>
-        )}
-        {data.isCommentsEnabled && (
-          <CommentsSection
-            comments={comments}
-            action={action}
-            post={post}
-            user={user}
-          />
-        )}
-        <RelatedPosts relatedPosts={relatedPosts} />
+          <LikeSection likes={data.postLikes} postId={post._id} user={user} />
+          {post.tags && (
+            <div className="mt-10 flex flex-col gap-5 mb-10">
+              <p>Tags:</p>
+              <div>
+                {post.tags.map((tag: SanityTag) => {
+                  return (
+                    <Link
+                      key={tag._id}
+                      style={{
+                        transition: "all 1s linear",
+                      }}
+                      className="border-2 cursor-pointer hover:border-dashed p-2 mr-5"
+                      to={"/tags/" + tag.slug}
+                    >
+                      {tag.title}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          {data.isCommentsEnabled && (
+            <CommentsSection
+              comments={comments}
+              action={action}
+              post={post}
+              user={user}
+            />
+          )}
+          <RelatedPosts relatedPosts={relatedPosts} />
+        </div>
       </div>
     </div>
   );

@@ -39,19 +39,21 @@ export default function Index() {
         backgroundColor: "transparent",
       }}
     >
-      <h1 className="inline w-full ml-5 lg:ml-0 text-xl font-bold border-white lg:p-10">
-        Latest and greatest!
-      </h1>
-      <ul
-        style={{
-          backgroundColor: "transparent",
-        }}
-        className="flex lg:p-10 m-5  flex-col gap-5 backdrop-opacity-0 "
-      >
-        {data.posts.map((post: SanityPost) => {
-          return <StaticPostCard post={post} key={post._id} />;
-        })}
-      </ul>
+      <div className="lg:w-[1000px] w-full m-auto">
+        <h1 className="w-full text-center flex justify-center lg:justify-start text-xl font-bold border-white lg:pl-10">
+          <span>Latest and greatest!</span>
+        </h1>
+        <ul
+          style={{
+            backgroundColor: "transparent",
+          }}
+          className="flex  lg:p-10 mt-5 lg:mt-0  flex-col gap-5 backdrop-opacity-0   m-auto"
+        >
+          {data.posts.map((post: SanityPost) => {
+            return <StaticPostCard post={post} key={post._id} />;
+          })}
+        </ul>
+      </div>
 
       <Blocks blocks={data.blocks} />
     </div>

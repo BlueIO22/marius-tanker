@@ -295,7 +295,7 @@ export default function App() {
         </div>
 
         <div
-          className="p-0 lg:max-w-[1000px] mt-[150px] lg:mt-[150px] m-auto"
+          className="p-0  mt-[150px] lg:mt-[150px] m-auto"
           style={{
             backgroundColor: "transparent",
           }}
