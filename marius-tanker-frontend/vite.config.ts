@@ -5,4 +5,9 @@ import { netlifyPlugin } from "@netlify/remix-adapter/plugin";
 
 export default defineConfig({
   plugins: [remix(), netlifyPlugin(), tsconfigPaths()],
+  build: {
+    rollupOptions: {
+      external: ["react-use-draggable-scroll"],
+    },
+  },
 });

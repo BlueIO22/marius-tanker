@@ -7,6 +7,7 @@ import { AUTHOR_BY_SLUG } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";
 import { useState } from "react";
 import Suprise from "~/routes/lib.client/Suprise";
+import StaticPostCard from "../lib.client/postCard/StaticPostCard";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await client.fetch(AUTHOR_BY_SLUG, {
@@ -53,7 +54,7 @@ export default function Author() {
         <h2 className="text-xl font-bold">Innlegg skrevet av Marius:</h2>
         <ul className="flex lg:p-10 mt-5 flex-col gap-5">
           {author.posts?.map((post: SanityPost) => {
-            return <PostCard post={post} key={post._id} />;
+            return <StaticPostCard post={post} key={post._id} />;
           })}
         </ul>
       </div>
