@@ -17,8 +17,8 @@ import {
 import { useEffect } from "react";
 import { useReadLocalStorage } from "usehooks-ts";
 import "./global.css";
-import SearchInput from "./lib/search/SearchInput";
-import ToggleTheme from "./lib/toggleTheme/ToggleTheme";
+import SearchInput from "./routes/lib.client/search/SearchInput";
+import ToggleTheme from "./routes/lib.client/toggleTheme/ToggleTheme";
 import tailwind from "./tailwind.css?url";
 import fontawesomestyles from "@fortawesome/fontawesome-svg-core/styles.css?url";
 import { authenticator } from "./service/auth.server";
@@ -281,7 +281,7 @@ export default function App() {
         </div>
 
         <div
-          className="lg:p-10 p-5 lg:max-w-[1000px] mt-[120px] lg:mt-[100px] m-auto"
+          className="p-0 lg:max-w-[1000px] mt-[120px] lg:mt-[100px] m-auto"
           style={{
             backgroundColor: "transparent",
           }}

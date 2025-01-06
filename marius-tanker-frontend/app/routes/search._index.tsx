@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { Input } from "~/components/ui/input";
-import PostCard from "~/lib/postCard/PostCard";
+import PostCard from "~/routes/lib.client/postCard/PostCard";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { SEARCH_QUERY } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";

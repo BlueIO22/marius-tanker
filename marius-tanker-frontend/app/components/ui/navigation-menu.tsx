@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { cn } from "~/lib/utils";
+import { cn } from "~/routes/lib.client/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NavigationMenu = React.forwardRef<

@@ -9,7 +9,7 @@ import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { Await, Link, useLoaderData } from "@remix-run/react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import dayjs from "dayjs";
-import Explanation from "~/lib/explanation/Explanation";
+import Explanation from "~/routes/lib.client/explanation/Explanation";
 import { supabase } from "~/service/supabase.server";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { POST_BY_SLUG, RELATED_POSTS_QUERY } from "~/utils/sanity/queries";
@@ -17,11 +17,11 @@ import { client } from "~/utils/sanity/sanity.server";
 import { Comment, Like } from "~/types/tanker";
 import { authenticator } from "~/service/auth.server";
 import type { ActionArgs, LoaderFunction } from "@remix-run/node";
-import CommentsSection from "~/lib/comments/CommentsSection";
+import CommentsSection from "~/routes/lib.client/comments/CommentsSection";
 import getDemoUser from "~/utils/tankerUtil";
-import LikeSection from "~/lib/LikeSection";
-import RelatedPosts from "~/lib/RelatedPosts";
-import PostContentImage from "~/lib/PostContentImage";
+import LikeSection from "~/routes/lib.client/LikeSection";
+import RelatedPosts from "~/routes/lib.client/RelatedPosts";
+import PostContentImage from "~/routes/lib.client/PostContentImage";
 import { Suspense } from "react";
 
 export const action = async ({ request }: ActionArgs) => {

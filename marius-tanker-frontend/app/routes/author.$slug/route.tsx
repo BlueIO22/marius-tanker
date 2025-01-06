@@ -1,12 +1,12 @@
 import { PortableText } from "@portabletext/react";
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import PostCard from "~/lib/postCard/PostCard";
+import PostCard from "~/routes/lib.client/postCard/PostCard";
 import { SanityAuthor, SanityPost } from "~/types/sanity";
 import { AUTHOR_BY_SLUG } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";
 import { useState } from "react";
-import Suprise from "~/lib/Suprise";
+import Suprise from "~/routes/lib.client/Suprise";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await client.fetch(AUTHOR_BY_SLUG, {

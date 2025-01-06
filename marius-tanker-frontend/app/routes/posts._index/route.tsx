@@ -1,6 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
-import PostCard from "~/lib/postCard/PostCard";
-import { cn } from "~/lib/utils";
+import PostCard from "~/routes/lib.client/postCard/PostCard";
+import { cn } from "~/routes/lib.client/utils";
 import { SanityPost } from "~/types/sanity";
 import { ALL_POSTS } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";

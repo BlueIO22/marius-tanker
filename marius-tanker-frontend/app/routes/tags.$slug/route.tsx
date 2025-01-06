@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import PostCard from "~/lib/postCard/PostCard";
+import PostCard from "~/routes/lib.client/postCard/PostCard";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { POSTS_BY_TAG } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";

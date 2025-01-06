@@ -5,6 +5,34 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
+.slide-in {
+  animation: slide-in 0.5s ease-out;
+}
+
+.drop-down {
+  animation: drop-down 0.5s ease-out;
+}
+
+@keyframes drop-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 .fly-from-left {
   animation: fly-from-left 0.5s ease-out;
 }

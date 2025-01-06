@@ -1,11 +1,12 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import PostCard from "~/lib/postCard/PostCard";
+import PostCard from "~/routes/lib.client/postCard/PostCard";
 import { SanityBlockObject, SanityPost } from "~/types/sanity";
 import { FRONTPAGE_QUERY, LATEST_POSTS } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import Blocks from "~/lib/Blocks";
+import Blocks from "~/routes/lib.client/Blocks";
+import StaticPostCard from "./lib.client/postCard/StaticPostCard";
 
 export const loader = async () => {
   const frontpageResponse = await client.fetch(FRONTPAGE_QUERY);
@@ -48,7 +49,7 @@ export default function Index() {
         className="flex lg:p-10 mt-5 flex-col gap-5 backdrop-opacity-0 "
       >
         {data.posts.map((post: SanityPost) => {
-          return <PostCard post={post} key={post._id} />;
+          return <StaticPostCard post={post} key={post._id} />;
         })}
       </ul>
 

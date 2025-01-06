@@ -15,15 +15,17 @@ export default function PostCard({
   hideAnimationOnHover,
   linkClassName,
   imageClassName,
+  overrideHovering,
 }: {
   post: SanityPost;
   className?: string;
   hideAnimationOnHover?: boolean;
   imageClassName?: string;
   linkClassName?: string;
+  overrideHovering?: boolean;
   hideExtraInfo?: boolean;
 }) {
-  const [isHovering, setIsHovering] = useState(false);
+  const [isHovering, setIsHovering] = useState(overrideHovering ?? false);
   const isNewArticle = dayjs(post._createdTime).isAfter(
     dayjs().subtract(7, "day")
   );
@@ -42,8 +44,12 @@ export default function PostCard({
           "z-0 grid items-center hover:z-10 lg:grid-cols-2 grid-cols-1 w-full",
           linkClassName
         )}
-        onMouseOver={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
+        onMouseOver={() => {
+          if (!overrideHovering) setIsHovering(true);
+        }}
+        onMouseLeave={() => {
+          if (!overrideHovering) setIsHovering(false);
+        }}
         onTouchMove={() => setIsHovering(true)}
         onTouchCancel={() => setIsHovering(false)}
         onFocusCapture={() => setIsHovering(true)}
