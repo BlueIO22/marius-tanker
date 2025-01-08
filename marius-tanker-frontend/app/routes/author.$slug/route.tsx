@@ -33,12 +33,12 @@ export default function Author() {
   return (
     <>
       <Suprise counter={counter} />
-      <div className="p-5 lg:p-5 flex flex-col lg:flex-row gap-10">
+      <div className="p-5 mt-[150px] lg:mt-[150px] m-auto lg:p-5 flex w-full lg:w-[60%] flex-col lg:flex-row gap-10">
         <img
           onClick={() => {
             setCounter(counter + 1);
           }}
-          className="border-2 shadow-xl rounded-full"
+          className="border-2 shadow-xl lg:h-[200px] rounded-full"
           src={author.imageUrl}
           alt={author.name}
         />

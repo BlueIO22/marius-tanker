@@ -13,6 +13,18 @@ body {
   animation: drop-down 0.5s ease-out;
 }
 
+.jump-up {
+  animation: jump-up 0.5s ease-in-out;
+}
+
+@keyframes jump-up {
+  from {
+    opacity: 0;
+    scale: 0.9;
+    transform: translateX(-50%);
+  }
+}
+
 @keyframes drop-down {
   from {
     opacity: 0;

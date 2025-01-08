@@ -7,9 +7,11 @@ import { cn } from "../utils";
 export default function StaticPostCard({
   post,
   className,
+  imageClassName,
 }: {
   post: SanityPost;
   className?: string;
+  imageClassName?: string;
 }) {
   const [isHovering, setIsHovering] = useState(false);
   return (
@@ -21,12 +23,15 @@ export default function StaticPostCard({
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       className={cn(
-        "flex relative hover:shadow-xl cursor-pointer flex-col hover:bg-white hover:text-black",
+        "flex relative fly-in hover:shadow-xl cursor-pointer flex-col hover:bg-white hover:text-black",
         className
       )}
     >
       <img
-        className="h-[200px] w-full lg:h-[300px] mb-2 object-cover object-center"
+        className={cn(
+          "h-[200px] w-full lg:h-[300px] mb-2 object-cover object-center",
+          imageClassName
+        )}
         src={post.imageUrl}
         alt=""
       />

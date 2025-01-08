@@ -15,7 +15,7 @@ export default function AuthorsPage() {
   const authors = useLoaderData<typeof loader>();
 
   return (
-    <div className="lg:w-[1000px] w-full m-auto">
+    <div className="lg:w-[1000px] mt-[150px] lg:mt-[150px] w-full m-auto">
       <h1 className="inline w-full ml-5 mb-2 text-xl font-bold border-white">
         Forfattere
       </h1>

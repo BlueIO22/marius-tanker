@@ -22,7 +22,8 @@ import getDemoUser from "~/utils/tankerUtil";
 import LikeSection from "~/routes/lib.client/LikeSection";
 import RelatedPosts from "~/routes/lib.client/RelatedPosts";
 import PostContentImage from "~/routes/lib.client/PostContentImage";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+import MetaInformation from "../lib.client/post/MetaInformation";
 
 export const action = async ({ request }: ActionArgs) => {
   switch (request.method) {
@@ -124,7 +125,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   });
 
   const isCommentsEnabled = process.env.IS_COMMENTS_ENABLED === "true";
-  console.log(process.env.IS_COMMENTS_ENABLED);
 
   const url = new URL(request.url);
   const testUser = url.searchParams.get("testUser");
@@ -157,6 +157,33 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   };
 }
 
+function getRelatedPosts(post: SanityPost) {
+  const relatedPostsList: any[] = [];
+  const relatedByTag = post?.relatedPosts?.postsByTag ?? [];
+  const relatedByAuthor = post?.relatedPosts?.postsByAuthor ?? [];
+  const latestPosts = post?.relatedPosts?.latestPosts ?? [];
+
+  relatedByAuthor.forEach((x) => {
+    relatedPostsList.push(x);
+  });
+
+  relatedByTag.forEach((x) => {
+    if (!relatedPostsList.some((y) => y._id == x._id)) {
+      relatedPostsList.push(x);
+    }
+  });
+
+  latestPosts.forEach((x) => {
+    if (!relatedPostsList.some((y) => y._id == x._id)) {
+      relatedPostsList.push(x);
+    }
+  });
+
+  return relatedPostsList.length > 2
+    ? relatedPostsList.splice(0, 3)
+    : relatedPostsList;
+}
+
 export default function Post() {
   const data = useLoaderData<typeof loader>();
   const action = useLoaderData<typeof action>();
@@ -164,6 +191,12 @@ export default function Post() {
   const post = data?.post;
   const comments: Comment[] = data?.comments ?? [];
   const user: any = data?.user;
+
+  const [relatedPosts, setRelatedPosts] = useState<SanityPost[]>([]);
+
+  useEffect(() => {
+    setRelatedPosts(getRelatedPosts(post));
+  }, [post]);
 
   if (!post) {
     return <h1>Fant ikke innlegget</h1>;
@@ -198,69 +231,67 @@ export default function Post() {
       },
     },
   };
-
-  const hasImageCrediting =
-    post.imageCreditLine ||
-    (post.creditLineFromUnsplash?.url && post.creditLineFromUnsplash?.line);
-
-  const isUnsplash = !post.imageCreditLine
-    ? post.creditLineFromUnsplash?.line && post.creditLineFromUnsplash?.url
-    : false;
-
-  const relatedPosts = [
-    ...(data.post?.relatedPosts?.postsByTag ?? []),
-    ...(data.post?.relatedPosts?.postsByAuthor ?? []),
-    ...(data.post?.relatedPosts?.latestPosts ?? []),
-  ];
   return (
-    <div className="w-full h-full lg:p-0 ">
-      <div className="mb-5 relative z-10">
-        <div className="absolute -translate-y-1/2 left-1/2 -translate-x-1/2 -bottom-[150px] p-10 flex flex-col items-center justify-center w-[600px] bg-white text-black ">
+    <div className="w-full h-full lg:p-0 mt-[150px] lg:mt-0">
+      <div className="mb-5 relative z-10 lg:shadow-xl">
+        <div className="lg:absolute z-10 lg:shadow-lg dark:border-none jump-up lg:border-2 lg:-translate-y-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-bottom-[220px] p-10 flex flex-col items-center justify-center w-full lg:w-[600px] lg:bg-white dark:lg:bg-transparent backdrop-blur-3xl  dark:lg:text-white text-black dark:text-white ">
           <h1 className="text-3xl">{post.title}</h1>
           <p className="text-xl mt-2"> - {post.subtitle}</p>
-          <div className="flex mt-5  pl-2 lg:pl-0 flex-col lg:flex-row lg:justify-between gap-5 lg:gap-10 ">
-            <>
-              <div className="flex flex-col lg:flex-row lg:gap-5 order-2 gap-2 lg:order-1">
-                <p>
-                  <FontAwesomeIcon className="mr-2" icon={faCalendar} />
-                  {dayjs(post._createdTime).format("DD.MM.YYYY hh:mm")}
-                </p>
-                {post.isWrittenByAI && (
-                  <p className="flex items-center">
-                    <FontAwesomeIcon className="mr-2" icon={faRobot} />
-                    <span>Denne artikkelen har innhold generert av KI</span>
-                  </p>
-                )}
-              </div>
-              {hasImageCrediting && (
-                <div className="flex flex-row order-1 lg:order-2 items-center">
-                  <FontAwesomeIcon icon={faCamera} className="mr-2 " />
-                  {isUnsplash ? (
-                    <Link
-                      target="_blank"
-                      rel="noreferrer"
-                      className="hover:underline"
-                      to={post.creditLineFromUnsplash?.url ?? ""}
-                    >
-                      {post.creditLineFromUnsplash?.line}
-                    </Link>
-                  ) : (
-                    <p>{post.imageCreditLine}</p>
-                  )}
+          <div className="hidden lg:flex mt-5 pl-2 lg:pl-0 flex-col lg:flex-row lg:justify-between gap-5 lg:gap-10 ">
+            <MetaInformation post={post} />
+          </div>
+
+          {post.isWrittenByAI && (
+            <div className="hidden lg:block text-center my-5">
+              <p>
+                <FontAwesomeIcon className="mr-2" icon={faRobot} />
+                <span>Denne artikkelen har innhold generert av KI</span>
+              </p>
+            </div>
+          )}
+
+          <div className="mt-2 ">
+            {post.author && (
+              <Link
+                to={"/author/" + post.author.slug}
+                className="flex mt-5 mb-5 w-[180px] cursor-pointer p-2 rounded-lg hover:underline flex-row gap-2 items-center"
+              >
+                <img
+                  className="h-[32px] rounded-full"
+                  src={post.author.imageUrl}
+                  alt={post.author + " bilde"}
+                />
+                <div>
+                  <p>{post.author.name}</p>
+                  <p className="text-xs">{post.author.occupation}</p>
                 </div>
-              )}
-            </>
+              </Link>
+            )}
           </div>
         </div>
+
+        <div
+          className="w-full hidden lg:block h-[600px] lg:h-[1000px] bg-center"
+          style={{
+            backgroundImage: `url(${post.imageUrl}?h=1200&w=1200&fit=crop)`,
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundSize: "cover",
+          }}
+        ></div>
+
         <img
-          className="border-2 lg:max-h-[600px] max-h-[250px] w-full object-cover object-center"
+          className="border-2 lg:hidden lg:max-h-[600px] max-h-[250px] w-full object-cover object-center"
           src={post.imageUrl}
           alt={post.title}
         />
+        <div className="lg:hidden m-5 flex flex-col gap-2">
+          <MetaInformation post={post} />
+        </div>
       </div>
       <div className="lg:max-w-[1000px] m-auto mt-10">
         <div className="mt-10 px-2 lg:pl-0">
-          <div className="mt-2">
+          <div className="mt-2 lg:hidden">
             {post.author && (
               <Link
                 to={"/author/" + post.author.slug}
@@ -278,7 +309,7 @@ export default function Post() {
               </Link>
             )}
           </div>
-          <div className="mt-5">
+          <div className="lg:mt-20 mt-10">
             <PortableText
               components={postContentComponents}
               value={post.content}
