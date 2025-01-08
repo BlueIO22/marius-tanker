@@ -114,7 +114,7 @@ export default function SearchPage() {
       )}
 
       {posts?.length > 0 && state != "loading" && (
-        <ul className="flex lg:p-10 mt-5 flex-col gap-5">
+        <ul className="grid grid-cols-1 lg:grid-cols-2 mt-5 flex-col gap-5">
           {posts.map((post: SanityPost) => {
             return <StaticPostCard post={post} key={post._id} />;
           })}

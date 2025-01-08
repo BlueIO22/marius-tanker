@@ -13,7 +13,7 @@ export default function PostContentImage({ value }: { value: any }) {
       value.image.creditLineFromUnsplash?.url
     : false;
 
-  const imageUrl = value.image.url + "?h=1200&w=1200&fit=crop";
+  const imageUrl = value.image.url + "";
 
   return (
     <div className="my-5">

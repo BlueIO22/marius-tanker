@@ -1,6 +1,11 @@
 import {
+  faBaseball,
+  faBullhorn,
+  faBullseye,
   faCalendar,
   faCamera,
+  faInfo,
+  faInfoCircle,
   faRobot,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -163,11 +168,11 @@ function getRelatedPosts(post: SanityPost) {
   const relatedByAuthor = post?.relatedPosts?.postsByAuthor ?? [];
   const latestPosts = post?.relatedPosts?.latestPosts ?? [];
 
-  relatedByAuthor.forEach((x) => {
+  relatedByTag.forEach((x) => {
     relatedPostsList.push(x);
   });
 
-  relatedByTag.forEach((x) => {
+  relatedByAuthor.forEach((x) => {
     if (!relatedPostsList.some((y) => y._id == x._id)) {
       relatedPostsList.push(x);
     }
@@ -203,9 +208,22 @@ export default function Post() {
   }
 
   const postContentComponents: any = {
+    list: {
+      bullet: ({ children }: { children: any }) => {
+        return <ul className="ml-5">{children}</ul>;
+      },
+    },
     listItem: {
-      number: ({ children }: { children: any }) => (
-        <li className="mt-5"> - {children}</li>
+      number: ({ children, index }: { children: any; index: number }) => (
+        <li>
+          {" "}
+          {index + 1}. {children}
+        </li>
+      ),
+      bullet: ({ children }: { children: any }) => (
+        <p className=" my-2">
+          <FontAwesomeIcon icon={faInfoCircle} /> {children}
+        </p>
       ),
     },
     types: {
@@ -225,6 +243,12 @@ export default function Post() {
             {children}
           </blockquote>
         );
+      },
+      h2: ({ children }: { children: any }) => {
+        return <h2 className="text-2xl font-bold">{children}</h2>;
+      },
+      h3: ({ children }: { children: any }) => {
+        return <h3 className="text-2xl font-bold">{children}</h3>;
       },
       normal: ({ children }: { children: any }) => {
         return <p className="mt-10 text-lg leading-8">{children}</p>;
@@ -309,7 +333,8 @@ export default function Post() {
               </Link>
             )}
           </div>
-          <div className="lg:mt-20 mt-10">
+          <div className="lg:mt-[150px] text-xl italic ">{post.excerpt}</div>
+          <div className=" mt-10">
             <PortableText
               components={postContentComponents}
               value={post.content}

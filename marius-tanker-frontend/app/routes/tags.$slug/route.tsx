@@ -4,6 +4,7 @@ import PostCard from "~/routes/lib.client/postCard/PostCard";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { POSTS_BY_TAG } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";
+import StaticPostCard from "../lib.client/postCard/StaticPostCard";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const response = await client.fetch(POSTS_BY_TAG, {
@@ -34,9 +35,9 @@ export default function TagPage() {
         {(data.tag.parent ? "- " : "") + data.tag.title} ({data.posts.length})
       </h1>
 
-      <ul className="flex mt-5 flex-col gap-5">
+      <ul className="grid grid-cols-1 lg:grid-cols-2 mt-5 flex-col gap-5">
         {data.posts.map((post: SanityPost) => {
-          return <PostCard post={post} key={post._id} />;
+          return <StaticPostCard post={post} key={post._id} />;
         })}
       </ul>
     </div>
