@@ -45,6 +45,7 @@ export default function TldrComponent({
           />
         </DrawerClose>
         <DrawerHeader className="ml-0 pl-0 text-left">
+          <p className="text-tiny opacity-60">Too long; didn't read</p>
           <DrawerTitle className="mb-5">{tldr.title}</DrawerTitle>
           <PortableText value={tldr.content} />
         </DrawerHeader>
