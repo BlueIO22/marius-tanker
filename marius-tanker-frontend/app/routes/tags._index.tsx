@@ -22,7 +22,7 @@ export default function TagsPage() {
     });
 
   return (
-    <div className="lg:p-10 mt-[150px] w-full lg:w-[50%] m-auto">
+    <div className="p-5 lg:p-10 mt-[150px] w-full lg:w-[50%] m-auto">
       <h1 className="text-3xl font-bold  underline">Tags:</h1>
       <ul className="flex flex-col gap-2 mt-5">
         {parentTags.map((parent: any) => {

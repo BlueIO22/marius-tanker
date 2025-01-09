@@ -20,7 +20,7 @@ export default function TagPage() {
   const data = useLoaderData<typeof loader>();
 
   return (
-    <div className="lg:p-10 mt-[150px] w-full lg:w-[60%] 2xl:w-[50%] m-auto ">
+    <div className="p-5 lg:p-10 mt-[150px] w-full lg:w-[60%] 2xl:w-[50%] m-auto ">
       {data.tag.parent ? (
         <Link
           className="font-bold hover:underline"

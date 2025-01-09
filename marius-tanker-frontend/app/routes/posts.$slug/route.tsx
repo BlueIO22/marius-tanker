@@ -202,7 +202,7 @@ export default function Post() {
         </div>
 
         <div
-          className="w-full hidden lg:block h-[600px] lg:h-[1000px] bg-center"
+          className="w-full hidden lg:block h-[600px] lg:h-[800px] 2xl:h-[1000px] bg-center"
           style={{
             backgroundImage: `url(${post.imageUrl}?h=1200&w=1200&fit=crop)`,
             backgroundRepeat: "no-repeat",

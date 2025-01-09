@@ -53,7 +53,7 @@ export default function SearchPage() {
   }, [selectedTags]);
 
   return (
-    <div className="mt-[150px] w-full lg:w-[50%] m-auto">
+    <div className="p-5 lg:p-0 mt-[150px] w-full lg:w-[50%] m-auto">
       <Input
         ﬁ
         value={value}
