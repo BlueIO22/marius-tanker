@@ -31,6 +31,10 @@ export type SanityPost = {
   content: [];
   imageUrl: string;
   previewImageUrl: string;
+  tldr?: {
+    title: string;
+    content: [];
+  };
   author?: SanityAuthor;
   estimatedReadingTime?: number;
   isWrittenByAI?: boolean;

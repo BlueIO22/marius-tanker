@@ -29,6 +29,7 @@ import RelatedPosts from "~/routes/lib.client/RelatedPosts";
 import PostContentImage from "~/routes/lib.client/PostContentImage";
 import { Suspense, useEffect, useState } from "react";
 import MetaInformation from "../lib.client/post/MetaInformation";
+import TldrComponent from "../lib.client/post/TldrComponent";
 
 export const action = async ({ request }: ActionArgs) => {
   switch (request.method) {
@@ -373,6 +374,7 @@ export default function Post() {
           <RelatedPosts relatedPosts={relatedPosts} />
         </div>
       </div>
+      <TldrComponent tldr={post.tldr} />
     </div>
   );
 }

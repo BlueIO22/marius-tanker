@@ -1,4 +1,4 @@
-import {faInfoCircle, faNewspaper} from '@fortawesome/free-solid-svg-icons'
+import {faBookReader, faInfoCircle, faNewspaper} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
@@ -114,6 +114,82 @@ export default defineType({
               }),
             ],
           },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'tldr',
+      type: 'object',
+      title: "TLDR (Too long, didn't read)",
+      icon: () => <FontAwesomeIcon icon={faBookReader} />,
+      fields: [
+        defineField({
+          name: 'title',
+          type: 'string',
+          title: 'Tittel',
+        }),
+        defineField({
+          name: 'content',
+          title: 'Innhold',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              name: 'imageObject',
+              type: 'object',
+              title: 'Bilde',
+              description: 'Bilde i innholdet',
+              fields: [
+                defineField({
+                  name: 'imageTitle',
+                  title: 'Tekst (under bildet)',
+                  type: 'string',
+                }),
+                defineField({
+                  name: 'imageCreditLine',
+                  type: 'string',
+                  description:
+                    'Bildekreditering er veldig viktig, hvis bildet er valgt fra unsplash så kommer dette automatisk',
+                  title: 'Bildekredittering',
+                }),
+                defineField({
+                  name: 'image',
+                  type: 'image',
+                  title: 'Bilde',
+                  description: 'Bilde i innholdet',
+                  validation: (v) => v.required(),
+                }),
+              ],
+            }),
+            defineArrayMember({
+              type: 'block',
+              marks: {
+                decorators: [
+                  {title: 'Strong', value: 'strong'},
+                  {title: 'Emphasis', value: 'em'},
+                ],
+                annotations: [
+                  defineArrayMember({
+                    type: 'object',
+                    name: 'explanation',
+                    title: 'Forklaring',
+                    icon: <FontAwesomeIcon icon={faInfoCircle} />,
+                    fields: [
+                      defineField({
+                        name: 'title',
+                        title: 'Tittel',
+                        type: 'string',
+                      }),
+                      defineField({
+                        name: 'content',
+                        title: 'Innhold',
+                        type: 'text',
+                      }),
+                    ],
+                  }),
+                ],
+              },
+            }),
+          ],
         }),
       ],
     }),

@@ -17,6 +17,16 @@ body {
   animation: jump-up 0.5s ease-in-out;
 }
 
+.fly-up {
+  animation: fly-up 0.5s ease-out;
+}
+
+@keyframes fly-up {
+  from {
+    transform: translateY(50%);
+  }
+}
+
 @keyframes jump-up {
   from {
     opacity: 0;
