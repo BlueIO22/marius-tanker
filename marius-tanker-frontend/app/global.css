@@ -17,6 +17,10 @@ body {
   animation: jump-up 0.5s ease-in-out;
 }
 
+.jump-up-infinite {
+  animation: jump-up-infinite 2s ease-in-out infinite;
+}
+
 .fly-up {
   animation: fly-up 0.5s ease-out;
 }
@@ -24,6 +28,21 @@ body {
 @keyframes fly-up {
   from {
     transform: translateY(50%);
+  }
+}
+
+@keyframes jump-up-infinite {
+  0% {
+    transform: translateY(0);
+    scale: 1.05;
+  }
+  50% {
+    transform: translateY(-10%);
+    scale: 0.9;
+  }
+  100% {
+    transform: translateY(0);
+    scale: 1.05;
   }
 }
 

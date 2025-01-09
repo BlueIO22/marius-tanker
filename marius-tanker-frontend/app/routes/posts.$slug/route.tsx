@@ -15,7 +15,6 @@ import { Await, Link, useLoaderData } from "@remix-run/react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import dayjs from "dayjs";
 import Explanation from "~/routes/lib.client/explanation/Explanation";
-import { supabase } from "~/service/supabase.server";
 import { SanityPost, SanityTag } from "~/types/sanity";
 import { POST_BY_SLUG, RELATED_POSTS_QUERY } from "~/utils/sanity/queries";
 import { client } from "~/utils/sanity/sanity.server";
@@ -24,86 +23,11 @@ import { authenticator } from "~/service/auth.server";
 import type { ActionArgs, LoaderFunction } from "@remix-run/node";
 import CommentsSection from "~/routes/lib.client/comments/CommentsSection";
 import getDemoUser from "~/utils/tankerUtil";
-import LikeSection from "~/routes/lib.client/LikeSection";
 import RelatedPosts from "~/routes/lib.client/RelatedPosts";
 import PostContentImage from "~/routes/lib.client/PostContentImage";
 import { Suspense, useEffect, useState } from "react";
 import MetaInformation from "../lib.client/post/MetaInformation";
 import TldrComponent from "../lib.client/post/TldrComponent";
-
-export const action = async ({ request }: ActionArgs) => {
-  switch (request.method) {
-    case "POST": {
-      const formData = await request.formData();
-      const userId = formData.get("userId");
-      const postId = formData.get("postId");
-      const reference = formData.get("reference");
-      const text = formData.get("text");
-      const root = formData.get("root");
-
-      if (!userId || !postId || !text) {
-        return new Response("", {
-          status: 400,
-          statusText: "Bad Request",
-        });
-      }
-
-      const response = await supabase.from("comments").upsert({
-        userId: userId,
-        postId: postId,
-        created_at: dayjs().toISOString(),
-        ref: reference,
-        text: text,
-        root: root,
-      });
-
-      if (response.error) {
-        return new Response("", {
-          status: 500,
-          statusText: "Internal Server Error",
-        });
-      }
-
-      return new Response("", {
-        status: 200,
-      });
-    }
-    case "DELETE": {
-      const formData = await request.formData();
-      const id = formData.get("id");
-      const userId = formData.get("userId");
-
-      if (!id || !userId) {
-        return new Response("", {
-          status: 400,
-          statusText: "Bad Request",
-        });
-      }
-
-      const response = await supabase
-        .from("comments")
-        .delete()
-        .eq("id", id)
-        .eq("userId", userId);
-
-      if (response.error) {
-        return new Response("", {
-          status: 500,
-          statusText: "Internal Server Error",
-        });
-      }
-
-      return new Response("", {
-        status: 200,
-      });
-    }
-    default:
-      return new Response("", {
-        status: 405,
-        statusText: "Method Not Allowed",
-      });
-  }
-};
 
 function iterateComment(comment: Comment, comments: Comment[]) {
   comment.comments = [];
@@ -135,29 +59,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const testUser = url.searchParams.get("testUser");
 
-  const commentsResponse = await supabase
-    .from("comments")
-    .select("*, likes(*)")
-    .eq("postId", response?._id);
-
-  const postLikes = await supabase
-    .from("likes")
-    .select("*")
-    .eq("postId", response?._id);
-
   const user =
     (await authenticator.isAuthenticated(request)) ??
     getDemoUser(testUser ?? "BlueIO22");
 
-  const comments =
-    commentsResponse?.data?.map((x) =>
-      iterateComment(x, commentsResponse.data)
-    ) ?? [];
-
   return {
     post: response as SanityPost,
-    postLikes: postLikes.data?.map((x) => x as Like) ?? [],
-    comments: comments,
     user,
     isCommentsEnabled,
   };
@@ -192,7 +99,6 @@ function getRelatedPosts(post: SanityPost) {
 
 export default function Post() {
   const data = useLoaderData<typeof loader>();
-  const action = useLoaderData<typeof action>();
 
   const post = data?.post;
   const comments: Comment[] = data?.comments ?? [];
@@ -341,7 +247,6 @@ export default function Post() {
               value={post.content}
             />
           </div>
-          <LikeSection likes={data.postLikes} postId={post._id} user={user} />
           {post.tags && (
             <div className="mt-10 flex flex-col gap-5 mb-10">
               <p>Tags:</p>
@@ -362,14 +267,6 @@ export default function Post() {
                 })}
               </div>
             </div>
-          )}
-          {data.isCommentsEnabled && (
-            <CommentsSection
-              comments={comments}
-              action={action}
-              post={post}
-              user={user}
-            />
           )}
           <RelatedPosts relatedPosts={relatedPosts} />
         </div>
