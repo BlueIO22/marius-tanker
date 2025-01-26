@@ -20,7 +20,7 @@ const POST_QUERY = `
             "line":  creditLine
         }},
         },
-        "imageUrl": image.asset->url,
+        "imageUrl": image.asset->url + "?w=1200&h=1200",
         "slug": slug.current,
         "previewImageUrl": image.asset->url + "?h=600&w=600",
         tags[]->{
