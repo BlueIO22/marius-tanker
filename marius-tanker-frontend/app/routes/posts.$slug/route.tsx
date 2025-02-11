@@ -204,7 +204,7 @@ export default function Post() {
         <div
           className="w-full hidden lg:block h-[600px] lg:h-[800px] 2xl:h-[1000px] bg-center"
           style={{
-            backgroundImage: `url(${post.imageUrl}?h=1200&w=1200&fit=crop)`,
+            backgroundImage: `url(${post.imageUrl}`,
             backgroundRepeat: "no-repeat",
             backgroundAttachment: "fixed",
             backgroundSize: "cover",
